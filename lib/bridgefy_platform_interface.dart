@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:bridgefy/bridgefy.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'bridgefy_method_channel.dart';
@@ -23,7 +26,15 @@ abstract class BridgefyPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  void start({required String apiKey, required BridgefyDelegate delegate}) {
+    throw UnimplementedError('start() has not been implemented.');
+  }
+
+  void send({required Uint8List data}) {
+    throw UnimplementedError('send() has not been implemented.');
+  }
+
+  void stop() {
+    throw UnimplementedError('stop() has not been implemented.');
   }
 }
