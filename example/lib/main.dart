@@ -60,39 +60,73 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
       ),
     );
   }
-  
+
   @override
   void bridgefyDidConnect({required String userID}) {
-    print(userID);
+    // TODO: implement bridgefyDidConnect
   }
-  
+
+  @override
+  void bridgefyDidDestroySession() {
+    // TODO: implement bridgefyDidDestroySession
+  }
+
   @override
   void bridgefyDidDisconnect({required String userID}) {
     // TODO: implement bridgefyDidDisconnect
   }
-  
+
+  @override
+  void bridgefyDidEstablishSecureConnection({required String userID}) {
+    // TODO: implement bridgefyDidEstablishSecureConnection
+  }
+
   @override
   void bridgefyDidFailSendingMessage({required String messageID, required Error error}) {
     // TODO: implement bridgefyDidFailSendingMessage
   }
-  
+
   @override
-  void bridgefyDidFailToStart({required Error error}) {
-    print(error);
+  void bridgefyDidFailToDestroySession() {
+    // TODO: implement bridgefyDidFailToDestroySession
   }
-  
+
   @override
-  void bridgefyDidReceiveData({required Uint8List data, required BridgefyTransmissionMode transmissionMode, String? userID}) {
+  void bridgefyDidFailToEstablishSecureConnection(
+      {required String userID, required BridgefyError error}) {
+    // TODO: implement bridgefyDidFailToEstablishSecureConnection
+  }
+
+  @override
+  void bridgefyDidFailToStart({required BridgefyError error}) {
+    // TODO: implement bridgefyDidFailToStart
+  }
+
+  @override
+  void bridgefyDidFailToStop({required BridgefyError error}) {
+    // TODO: implement bridgefyDidFailToStop
+  }
+
+  @override
+  void bridgefyDidReceiveData(
+      {required Uint8List data,
+      required BridgefyTransmissionMode transmissionMode,
+      String? userID}) {
     // TODO: implement bridgefyDidReceiveData
   }
-  
+
   @override
   void bridgefyDidSendMessage({required String messageID}) {
     // TODO: implement bridgefyDidSendMessage
   }
-  
+
   @override
   void bridgefyDidStart({required String currentUserID}) {
     // TODO: implement bridgefyDidStart
+  }
+
+  @override
+  void bridgefyDidStop() {
+    // TODO: implement bridgefyDidStop
   }
 }

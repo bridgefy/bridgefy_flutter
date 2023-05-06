@@ -119,13 +119,63 @@ class BridgefyError implements Exception {
   }
 }
 
+/// Definition of the functions required to handle events occurred in the Bridgefy SDK.
 mixin BridgefyDelegate {
+  /// This function is called when the BridgefySDK has been started.
+  /// - Parameter userId: The current user id
   void bridgefyDidStart({required String currentUserID});
-  void bridgefyDidFailToStart({required Error error});
+
+  /// This function is called when an error occurred while starting the BridgefySDK.
+  /// - Parameter error: Error reason.
+  void bridgefyDidFailToStart({required BridgefyError error});
+
+  /// This function is called when the BridgefySDK has been stopped.
+  void bridgefyDidStop();
+
+  /// This function is called when an error occurred while stopping the BridgefySDK.
+  /// - Parameter error: Error reason.
+  void bridgefyDidFailToStop({required BridgefyError error});
+
+  /// The current session was destroyed
+  void bridgefyDidDestroySession();
+
+  /// An error occurred while destroying the current session
+  void bridgefyDidFailToDestroySession();
+
+  /// This function is called to notify a new connection.
+  /// - Parameter userId: The id of the connected peer.
   void bridgefyDidConnect({required String userID});
+
+  /// This function is called to notify a disconnection.
+  /// - Parameter userId: The id of the disconnected peer.
   void bridgefyDidDisconnect({required String userID});
+
+  /// This function is called to notify when an on-demand secure connection was established.
+  /// - Parameter userId: The id of the user with whom the secure connection was established.
+  void bridgefyDidEstablishSecureConnection({required String userID});
+
+  /// This function is called to notify when an on-demand secure connection could not be established.
+  /// - Parameters:
+  ///   - userId: The id of the user with whom the secure connection failed.
+  ///   - error: Error reason
+  void bridgefyDidFailToEstablishSecureConnection(
+      {required String userID, required BridgefyError error});
+
+  /// This function is called when you confirm the sending of the message
+  /// - Parameter messageId: The id of the message sent successfully
   void bridgefyDidSendMessage({required String messageID});
+
+  /// This function is called when the message could not be sent
+  /// - Parameters:
+  ///   - messageId: The id of the message that was tried to be sent
+  ///   - error: Error reason.
   void bridgefyDidFailSendingMessage({required String messageID, required Error error});
+
+  /// This function is called when a new message is received
+  /// - Parameters:
+  ///   - data: The message data
+  ///   - messageId: The id of the message that was received
+  ///   - transmissionMode: The mode used to propagate a message
   void bridgefyDidReceiveData(
       {required Uint8List data,
       required BridgefyTransmissionMode transmissionMode,
@@ -136,7 +186,8 @@ class Bridgefy {
   /// Initialize the SDK
   /// - Parameters:
   ///   - apiKey: API key
-  ///   - propagationProfile: Profile that defines a series of properties and rules for the propagation of messages.
+  ///   - propagationProfile: Profile that defines a series of properties and rules for the
+  ///     propagation of messages.
   ///   - delegate: Delegate that handles Bridgefy SDK events.
   ///   - verboseLogging: The log level.
   Future<void> initialize(
@@ -156,7 +207,8 @@ class Bridgefy {
     return BridgefyPlatform.instance.start();
   }
 
-  /// Function used to send data using a ``TransmissionMode``. This method returns a UUID to identify the message sent.
+  /// Function used to send data using a ``TransmissionMode``. This method returns a UUID to
+  /// identify the message sent.
   /// - Parameters:
   ///   - data: The message data
   ///   - transmissionMode: The mode used to propagate a message through nearby devices.

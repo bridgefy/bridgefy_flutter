@@ -59,7 +59,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
           _delegate?.bridgefyDidStart(currentUserID: call.arguments as String);
           break;
         case "bridgefyDidFailToStart":
-          _delegate?.bridgefyDidFailToStart(error: call.arguments as Error);
+          _delegate?.bridgefyDidFailToStart(error: call.arguments as BridgefyError);
           break;
         default:
           break;
