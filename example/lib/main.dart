@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:bridgefy/bridgefy.dart';
 
@@ -19,13 +15,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   String _platformVersion = 'Unknown';
-  final _bridgefyPlugin = Bridgefy();
+  late Bridgefy _bridgefyPlugin;
 
   @override
   void initState() {
     super.initState();
     // initPlatformState();
-    _bridgefyPlugin.start(apiKey: "test", delegate: this);
+    _bridgefyPlugin = Bridgefy(apiKey: "test", delegate: this);
+    _bridgefyPlugin.start();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

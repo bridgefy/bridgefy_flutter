@@ -26,11 +26,22 @@ abstract class BridgefyPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  void start({required String apiKey, required BridgefyDelegate delegate}) {
+  void initialize(
+      {required String apiKey,
+      required BridgefyDelegate delegate,
+      BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+      bool verboseLogging = false}) {
+    throw UnimplementedError('initialize() has not been implemented.');
+  }
+
+  void start() {
     throw UnimplementedError('start() has not been implemented.');
   }
 
-  void send({required Uint8List data}) {
+  void send(
+      {required Uint8List data,
+      required BridgefyTransmissionMode transmissionMode,
+      String? userID}) {
     throw UnimplementedError('send() has not been implemented.');
   }
 
