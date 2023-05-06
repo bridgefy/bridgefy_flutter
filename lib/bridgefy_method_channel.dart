@@ -27,27 +27,45 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   @override
-  void start() {
-    methodChannel.invokeMethod('start');
+  Future<void> start() {
+    return methodChannel.invokeMethod('start');
   }
 
   @override
-  void send(
+  Future<String> send(
       {required Uint8List data,
       required BridgefyTransmissionMode transmissionMode,
       String? userID}) {
-    methodChannel.invokeMethod(
-        'send', {"data": data, "transmissionMode": transmissionMode.name, "userID": userID});
+    return methodChannel.invokeMethod(
+            'send', {"data": data, "transmissionMode": transmissionMode.name, "userID": userID})
+        as Future<String>;
   }
 
   @override
-  void stop() {
-    methodChannel.invokeMethod('stop');
+  Future<void> stop() {
+    return methodChannel.invokeMethod('stop');
   }
 
+  @override
+  Future<List<String>> get connectedPeers =>
+      methodChannel.invokeMethod('connectedPeers') as Future<List<String>>;
+
+  @override
+  Future<String> get currentUserID => methodChannel.invokeMethod('currentUserID') as Future<String>;
+
+  @override
+  Future<void> establishSecureConnection({required String userID}) {
+    return methodChannel.invokeMethod('establishSecureConnection', {"userID": userID});
+  }
+
+  @override
+  Future<DateTime> get licenseExpirationDate =>
+      methodChannel.invokeMethod('licenseExpirationDate') as Future<DateTime>;
+
   void _throwIfError(dynamic result) {
-    if (result is Map) {
-      throw BridgefyError(name: result["error"], code: result["code"]);
+    if (result is Map && result.containsKey("error")) {
+      final error = result["error"];
+      throw BridgefyError(name: error["type"], code: error["code"]);
     }
   }
 

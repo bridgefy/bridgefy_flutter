@@ -34,18 +34,34 @@ abstract class BridgefyPlatform extends PlatformInterface {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
-  void start() {
+  Future<void> start() {
     throw UnimplementedError('start() has not been implemented.');
   }
 
-  void send(
+  Future<void> stop() {
+    throw UnimplementedError('stop() has not been implemented.');
+  }
+
+  Future<void> destroySession() {
+    throw UnimplementedError('destroySession() has not been implemented.');
+  }
+
+  Future<String> send(
       {required Uint8List data,
       required BridgefyTransmissionMode transmissionMode,
       String? userID}) {
     throw UnimplementedError('send() has not been implemented.');
   }
 
-  void stop() {
-    throw UnimplementedError('stop() has not been implemented.');
+  Future<void> updateLicense() {
+    throw UnimplementedError('updateLicense() has not been implemented.');
   }
+
+  Future<void> establishSecureConnection({required String userID});
+
+  Future<String> get currentUserID;
+
+  Future<List<String>> get connectedPeers;
+
+  Future<DateTime> get licenseExpirationDate;
 }

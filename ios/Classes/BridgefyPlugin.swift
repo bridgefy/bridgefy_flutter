@@ -30,6 +30,18 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     case "stop":
       stop(call, result: result)
       break
+    case "connectedPeers":
+      connectedPeers(call, result: result)
+      break
+    case "currentUserID":
+      currentUserID(call, result: result)
+      break
+    case "establishSecureConnection":
+      establishSecureConnection(call, result: result)
+      break
+    case "licenseExpirationDate":
+      licenseExpirationDate(call, result: result)
+      break
     default:
       break
     }
@@ -42,7 +54,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStart",
-                         arguments: ["error": error])
+                         arguments: ["error": errorDictionary(from: error)])
   }
 
   public func bridgefyDidStop() {
@@ -52,7 +64,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStop(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStop",
-                         arguments: ["error": error])
+                         arguments: ["error": errorDictionary(from: error)])
   }
 
   public func bridgefyDidDestroySession() {
@@ -83,7 +95,10 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   public func bridgefyDidFailToEstablishSecureConnection(with userId: UUID,
                                                          error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToEstablishSecureConnection",
-                         arguments: ["userId": userId, "error": error] as [String : Any])
+                         arguments: [
+                          "userId": userId,
+                          "error": errorDictionary(from: error)
+                         ] as [String : Any])
   }
 
   public func bridgefyDidSendMessage(with messageId: UUID) {
@@ -94,7 +109,10 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   public func bridgefyDidFailSendingMessage(with messageId: UUID,
                                             withError error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
-                         arguments: ["messageId": messageId, "error": error] as [String : Any])
+                         arguments: [
+                          "messageId": messageId,
+                          "error": errorDictionary(from: error)
+                         ] as [String : Any])
   }
 
   public func bridgefyDidReceiveData(_ data: Data,
@@ -119,8 +137,8 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
                                 delegate: self,
                                 verboseLogging: verboseLogging)
         result(true)
-      } catch let e as BridgefyError {
-        result(error(from: e))
+      } catch let error as BridgefyError {
+        result(["error": errorDictionary(from: error)])
       } catch {
         result(false)
       }
@@ -149,6 +167,23 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     bridgefy?.stop()
   }
 
+  private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    // TODO
+  }
+
+  private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    // TODO
+  }
+
+  private func establishSecureConnection(_ call: FlutterMethodCall,
+                                         result: @escaping FlutterResult) {
+    // TODO
+  }
+
+  private func licenseExpirationDate(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    // TODO
+  }
+
   private func propagationProfile(from string: String) -> PropagationProfile {
     switch (string) {
     case "highDensityNetwork":
@@ -173,64 +208,64 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 //    }
 //  }
 
-  private func error(from bridgefyError: BridgefyError) -> Dictionary<String, Any> {
+  private func errorDictionary(from bridgefyError: BridgefyError) -> Dictionary<String, Any> {
     switch bridgefyError {
     case .licenseError(code: let code):
-      return ["error": "licenseError", "code": code]
+      return ["type": "licenseError", "code": code]
     case .simulatorIsNotSupported:
-      return ["error": "simulatorIsNotSupported"]
+      return ["type": "simulatorIsNotSupported"]
     case .notStarted:
-      return ["error": "notStarted"]
+      return ["type": "notStarted"]
     case .alreadyInstantiated:
-      return ["error": "alreadyInstantiated"]
+      return ["type": "alreadyInstantiated"]
     case .startInProgress:
-      return ["error": "startInProgress"]
+      return ["type": "startInProgress"]
     case .alreadyStarted:
-      return ["error": "alreadyStarted"]
+      return ["type": "alreadyStarted"]
     case .serviceNotStarted:
-      return ["error": "serviceNotStarted"]
+      return ["type": "serviceNotStarted"]
     case .missingBundleID:
-      return ["error": "missingBundleID"]
+      return ["type": "missingBundleID"]
     case .invalidAPIKey:
-      return ["error": "invalidAPIKey"]
+      return ["type": "invalidAPIKey"]
     case .internetConnectionRequired:
-      return ["error": "internetConnectionRequired"]
+      return ["type": "internetConnectionRequired"]
     case .sessionError:
-      return ["error": "sessionError"]
+      return ["type": "sessionError"]
     case .expiredLicense:
-      return ["error": "expiredLicense"]
+      return ["type": "expiredLicense"]
     case .inconsistentDeviceTime:
-      return ["error": "inconsistentDeviceTime"]
+      return ["type": "inconsistentDeviceTime"]
     case .BLEUsageNotGranted:
-      return ["error": "BLEUsageNotGranted"]
+      return ["type": "BLEUsageNotGranted"]
     case .BLEUsageRestricted:
-      return ["error": "BLEUsageRestricted"]
+      return ["type": "BLEUsageRestricted"]
     case .BLEPoweredOff:
-      return ["error": "BLEPoweredOff"]
+      return ["type": "BLEPoweredOff"]
     case .BLEUnsupported:
-      return ["error": "BLEUnsupported"]
+      return ["type": "BLEUnsupported"]
     case .BLEUnknownError:
-      return ["error": "BLEUnknownError"]
+      return ["type": "BLEUnknownError"]
     case .inconsistentConnection:
-      return ["error": "inconsistentConnection"]
+      return ["type": "inconsistentConnection"]
     case .connectionIsAlreadySecure:
-      return ["error": "connectionIsAlreadySecure"]
+      return ["type": "connectionIsAlreadySecure"]
     case .cannotCreateSecureConnection:
-      return ["error": "cannotCreateSecureConnection"]
+      return ["type": "cannotCreateSecureConnection"]
     case .dataLengthExceeded:
-      return ["error": "dataLengthExceeded"]
+      return ["type": "dataLengthExceeded"]
     case .dataValueIsEmpty:
-      return ["error": "dataValueIsEmpty"]
+      return ["type": "dataValueIsEmpty"]
     case .peerIsNotConnected:
-      return ["error": "peerIsNotConnected"]
+      return ["type": "peerIsNotConnected"]
     case .internalError:
-      return ["error": "internalError"]
+      return ["type": "internalError"]
     case .storageError(code: let code):
-      return ["error": "storageError", "code": code]
+      return ["type": "storageError", "code": code]
     case .encodingError(code: let code):
-      return ["error": "encodingError", "code": code]
+      return ["type": "encodingError", "code": code]
     case .encryptionError(code: let code):
-      return ["error": "encryptionError", "code": code]
+      return ["type": "encryptionError", "code": code]
     @unknown default:
       return [:]
     }

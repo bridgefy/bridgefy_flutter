@@ -182,6 +182,7 @@ mixin BridgefyDelegate {
       String? userID});
 }
 
+/// Bridgefy SDK
 class Bridgefy {
   /// Initialize the SDK
   /// - Parameters:
@@ -203,8 +204,18 @@ class Bridgefy {
   }
 
   /// Start Bridgefy SDK operations
-  void start() {
+  Future<void> start() {
     return BridgefyPlatform.instance.start();
+  }
+
+  /// Stop Bridgefy SDK operations
+  Future<void> stop() {
+    return BridgefyPlatform.instance.stop();
+  }
+
+  /// Destroy current session
+  Future<void> destroySession() {
+    return BridgefyPlatform.instance.destroySession();
   }
 
   /// Function used to send data using a ``TransmissionMode``. This method returns a UUID to
@@ -213,7 +224,7 @@ class Bridgefy {
   ///   - data: The message data
   ///   - transmissionMode: The mode used to propagate a message through nearby devices.
   /// - Returns: The id of the message that was sent.
-  void send(
+  Future<String> send(
       {required Uint8List data,
       required BridgefyTransmissionMode transmissionMode,
       String? userID}) {
@@ -221,8 +232,29 @@ class Bridgefy {
         .send(data: data, transmissionMode: transmissionMode, userID: userID);
   }
 
-  /// Stop Bridgefy SDK operations
-  void stop() {
-    return BridgefyPlatform.instance.stop();
+  /// Function to update the license
+  Future<void> updateLicense() {
+    return BridgefyPlatform.instance.updateLicense();
+  }
+
+  /// Establishes a secure connection with the specified user using
+  /// - Parameter userId: The UUID of the user with whom a secure
+  ///  connection should be established.
+  Future<void> establishSecureConnection({required String userID}) {
+    return BridgefyPlatform.instance.establishSecureConnection(userID: userID);
+  }
+
+  Future<String> get currentUserID {
+    return BridgefyPlatform.instance.currentUserID;
+  }
+
+  /// Returns connected peers
+  Future<List<String>> get connectedPeers {
+    return BridgefyPlatform.instance.connectedPeers;
+  }
+
+  /// Returns license expiration date
+  Future<DateTime> get licenseExpirationDate {
+    return BridgefyPlatform.instance.licenseExpirationDate;
   }
 }
