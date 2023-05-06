@@ -12,18 +12,18 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   BridgefyDelegate? _delegate;
 
   @override
-  void initialize(
+  Future<void> initialize(
       {required String apiKey,
       required BridgefyDelegate delegate,
       BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
-      bool verboseLogging = false}) {
-    _delegate = delegate;
-    methodChannel.invokeMethod('start', {
+      bool verboseLogging = false}) async {
+    final value = await methodChannel.invokeMethod('initialize', {
       "apiKey": apiKey,
       "propagationProfile": propagationProfile.name,
       "verboseLogging": verboseLogging,
     });
-    _configureDelegation();
+    _throwIfError(value);
+    _configureDelegate(delegate);
   }
 
   @override
@@ -45,7 +45,14 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     methodChannel.invokeMethod('stop');
   }
 
-  void _configureDelegation() {
+  void _throwIfError(dynamic result) {
+    if (result is Map) {
+      throw BridgefyError(name: result["error"], code: result["code"]);
+    }
+  }
+
+  void _configureDelegate(BridgefyDelegate delegate) {
+    _delegate = delegate;
     methodChannel.setMethodCallHandler((call) async {
       switch (call.method) {
         case "bridgefyDidStart":

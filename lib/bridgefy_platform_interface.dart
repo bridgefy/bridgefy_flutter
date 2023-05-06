@@ -26,7 +26,7 @@ abstract class BridgefyPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  void initialize(
+  Future<void> initialize(
       {required String apiKey,
       required BridgefyDelegate delegate,
       BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,

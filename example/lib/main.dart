@@ -15,14 +15,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   String _platformVersion = 'Unknown';
-  late Bridgefy _bridgefyPlugin;
+  final _bridgefy = Bridgefy();
 
   @override
   void initState() {
     super.initState();
     // initPlatformState();
-    _bridgefyPlugin = Bridgefy(apiKey: "test", delegate: this);
-    _bridgefyPlugin.start();
+    _bridgefy.initialize(apiKey: "test", delegate: this);
+    _bridgefy.start();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

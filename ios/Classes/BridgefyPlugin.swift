@@ -118,10 +118,11 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
                                 propagationProfile: propagationProfile(from: profileStr),
                                 delegate: self,
                                 verboseLogging: verboseLogging)
+        result(true)
       } catch let e as BridgefyError {
         result(error(from: e))
       } catch {
-        //
+        result(false)
       }
     }
   }
