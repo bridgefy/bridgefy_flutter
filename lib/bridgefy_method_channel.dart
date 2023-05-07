@@ -36,9 +36,11 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       {required Uint8List data,
       required BridgefyTransmissionMode transmissionMode,
       String? userID}) {
-    return methodChannel.invokeMethod(
-            'send', {"data": data, "transmissionMode": transmissionMode.name, "userID": userID})
-        as Future<String>;
+    return methodChannel.invokeMethod('send', {
+      "data": data,
+      "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
+      "userID": userID
+    }) as Future<String>;
   }
 
   @override
@@ -63,10 +65,25 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       methodChannel.invokeMethod('licenseExpirationDate') as Future<DateTime>;
 
   void _throwIfError(dynamic result) {
+    final error = _errorFromResult(result);
+    if (error != null) {
+      throw error;
+    }
+  }
+
+  BridgefyError? _errorFromResult(dynamic result) {
     if (result is Map && result.containsKey("error")) {
       final error = result["error"];
-      throw BridgefyError(name: error["type"], code: error["code"]);
+      return BridgefyError(name: error["type"], code: error["code"]);
     }
+    return null;
+  }
+
+  BridgefyTransmissionMode? _transmissionModeFromResult(dynamic result) {
+    if (result is Map && result.containsKey("transmissionMode")) {
+      return BridgefyTransmissionMode(name: result["mode"], uuid: result["uuid"]);
+    }
+    return null;
   }
 
   void _configureDelegate(BridgefyDelegate delegate) {
@@ -74,12 +91,53 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     methodChannel.setMethodCallHandler((call) async {
       switch (call.method) {
         case "bridgefyDidStart":
-          _delegate?.bridgefyDidStart(currentUserID: call.arguments as String);
+          _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
           break;
         case "bridgefyDidFailToStart":
-          _delegate?.bridgefyDidFailToStart(error: call.arguments as BridgefyError);
+          _delegate?.bridgefyDidFailToStart(error: _errorFromResult(call.arguments)!);
+          break;
+        case "bridgefyDidStop":
+          _delegate?.bridgefyDidStop();
+          break;
+        case "bridgefyDidFailToStop":
+          _delegate?.bridgefyDidFailToStop(error: _errorFromResult(call.arguments)!);
+          break;
+        case "bridgefyDidDestroySession":
+          _delegate?.bridgefyDidDestroySession();
+          break;
+        case "bridgefyDidFailToDestroySession":
+          _delegate?.bridgefyDidFailToDestroySession();
+          break;
+        case "bridgefyDidConnect":
+          _delegate?.bridgefyDidConnect(userID: call.arguments['userId'] as String);
+          break;
+        case "bridgefyDidDisconnect":
+          _delegate?.bridgefyDidDisconnect(userID: call.arguments['userId'] as String);
+          break;
+        case "bridgefyDidEstablishSecureConnection":
+          _delegate?.bridgefyDidEstablishSecureConnection(
+              userID: call.arguments['userId'] as String);
+          break;
+        case "bridgefyDidFailToEstablishSecureConnection":
+          _delegate?.bridgefyDidFailToEstablishSecureConnection(
+              userID: call.arguments['userId'] as String, error: _errorFromResult(call.arguments)!);
+          break;
+        case "bridgefyDidSendMessage":
+          _delegate?.bridgefyDidSendMessage(messageID: call.arguments['messageId'] as String);
+          break;
+        case "bridgefyDidFailSendingMessage":
+          _delegate?.bridgefyDidFailSendingMessage(
+              messageID: call.arguments['messageId'] as String,
+              error: _errorFromResult(call.arguments)!);
+          break;
+        case "bridgefyDidReceiveData":
+          _delegate?.bridgefyDidReceiveData(
+              data: call.arguments['data'] as Uint8List,
+              messageId: call.arguments['messageId'] as String,
+              transmissionMode: _transmissionModeFromResult(call.arguments)!);
           break;
         default:
+          // print("Warning: received unhandled delegate method: ${call.method}");
           break;
       }
     });

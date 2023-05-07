@@ -47,6 +47,8 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     }
   }
 
+  // MARK: Delegate
+
   public func bridgefyDidStart(with userId: UUID) {
     channel.invokeMethod("bridgefyDidStart",
                          arguments: ["userId": userId])
@@ -122,31 +124,37 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
                          arguments: [
                           "data": data,
                           "messageId": messageId,
-                          "transmissionMode": transmissionMode
+                          "transmissionMode": transmissionModeDictionary(from: transmissionMode)
                          ] as [String : Any])
   }
+
+  // MARK: Methods
 
   private func initialize(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     if let args = call.arguments as? Dictionary<String, Any>,
        let apiKey = args["apiKey"] as? String,
        let profileStr = args["propagationProfile"] as? String,
+       let propagationProfile = propagationProfile(from: profileStr),
        let verboseLogging = args["verboseLogging"] as? Bool {
       do {
         bridgefy = try Bridgefy(withApiKey: apiKey,
-                                propagationProfile: propagationProfile(from: profileStr),
+                                propagationProfile: propagationProfile,
                                 delegate: self,
                                 verboseLogging: verboseLogging)
-        result(true)
+        result(nil)
       } catch let error as BridgefyError {
         result(["error": errorDictionary(from: error)])
       } catch {
-        result(false)
+        result(nil)
       }
+    } else {
+      result(nil)
     }
   }
 
   private func start(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     bridgefy?.start()
+    result(nil)
   }
 
   private func send(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -156,15 +164,20 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
        let transmissionMode = args["transmissionMode"] as? TransmissionMode {
       do {
         let uuid = try bridgefy.send(data, using: transmissionMode)
-        result(uuid.uuidString)
+        result(["messageID": uuid.uuidString])
+      } catch let error as BridgefyError {
+        result(["error": errorDictionary(from: error)])
       } catch {
-        //
+        result(nil)
       }
+    } else {
+      result(nil)
     }
   }
 
   private func stop(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     bridgefy?.stop()
+    result(nil)
   }
 
   private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -184,7 +197,9 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     // TODO
   }
 
-  private func propagationProfile(from string: String) -> PropagationProfile {
+  // MARK: Utils
+
+  private func propagationProfile(from string: String) -> PropagationProfile? {
     switch (string) {
     case "highDensityNetwork":
       return .highDensityNetwork
@@ -194,19 +209,44 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
       return .longReach
     case "shortReach":
       return .shortReach
-    default:
+    case "standard":
       return .standard
+    default:
+      return nil
     }
   }
 
-//  private func transmissionMode(from string: String) -> TransmissionMode {
-//    switch (string) {
-//    case "p2p":
-//      return .p2p(userId: <#T##UUID#>)
-//    default:
-//      return .broadcast(senderId: <#T##UUID#>)
-//    }
-//  }
+  private func transmissionMode(from dict: Dictionary<String, String>) -> TransmissionMode? {
+    if let mode = dict["mode"],
+       let uuidStr = dict["uuid"],
+       let uuid = UUID(uuidString: uuidStr) {
+      switch mode {
+      case "p2p":
+        return .p2p(userId: uuid)
+      case "mesh":
+        return .mesh(userId: uuid)
+      case "broadcast":
+        return .broadcast(senderId: uuid)
+      default:
+        return nil
+      }
+    }
+    return nil;
+  }
+
+  private func transmissionModeDictionary(from transmissionMode: TransmissionMode)
+    -> Dictionary<String, String> {
+    switch transmissionMode {
+    case .p2p(userId: let uuid):
+      return ["mode": "p2p", "uuid": uuid.uuidString]
+    case .mesh(userId: let uuid):
+      return ["mode": "mesh", "uuid": uuid.uuidString]
+    case .broadcast(senderId: let uuid):
+      return ["mode": "broadcast", "uuid": uuid.uuidString]
+    @unknown default:
+      return [:]
+    }
+  }
 
   private func errorDictionary(from bridgefyError: BridgefyError) -> Dictionary<String, Any> {
     switch bridgefyError {

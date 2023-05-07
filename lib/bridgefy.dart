@@ -2,8 +2,17 @@ import 'dart:typed_data';
 
 import 'bridgefy_platform_interface.dart';
 
+/// Profile that defines a series of properties and rules for the propagation of messages.
+enum BridgefyPropagationProfile {
+  standard,
+  highDensityNetwork,
+  sparseNetwork,
+  longReach,
+  shortReach
+}
+
 /// The mode used to propagate a message through nearby devices.
-enum BridgefyTransmissionMode {
+enum BridgefyTransmissionModeType {
   /// Deliver a message to a specific recipient only if there's an active connection with it.
   p2p,
 
@@ -14,13 +23,12 @@ enum BridgefyTransmissionMode {
   broadcast
 }
 
-/// Profile that defines a series of properties and rules for the propagation of messages.
-enum BridgefyPropagationProfile {
-  standard,
-  highDensityNetwork,
-  sparseNetwork,
-  longReach,
-  shortReach
+class BridgefyTransmissionMode {
+  BridgefyTransmissionModeType type;
+  String uuid;
+
+  BridgefyTransmissionMode({required String name, required this.uuid})
+      : type = BridgefyTransmissionModeType.values.byName(name);
 }
 
 /// Describes errors in the Bridgefy error domain.
@@ -115,7 +123,7 @@ class BridgefyError implements Exception {
 
   @override
   String toString() {
-    return "BridgefyError (${type.name})";
+    return "BridgefyError (type: ${type.name}, code: $code)";
   }
 }
 
@@ -169,17 +177,18 @@ mixin BridgefyDelegate {
   /// - Parameters:
   ///   - messageId: The id of the message that was tried to be sent
   ///   - error: Error reason.
-  void bridgefyDidFailSendingMessage({required String messageID, required Error error});
+  void bridgefyDidFailSendingMessage({required String messageID, required BridgefyError error});
 
   /// This function is called when a new message is received
   /// - Parameters:
   ///   - data: The message data
   ///   - messageId: The id of the message that was received
   ///   - transmissionMode: The mode used to propagate a message
-  void bridgefyDidReceiveData(
-      {required Uint8List data,
-      required BridgefyTransmissionMode transmissionMode,
-      String? userID});
+  void bridgefyDidReceiveData({
+    required Uint8List data,
+    required String messageId,
+    required BridgefyTransmissionMode transmissionMode,
+  });
 }
 
 /// Bridgefy SDK
