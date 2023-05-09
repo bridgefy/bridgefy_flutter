@@ -26,11 +26,12 @@ abstract class BridgefyPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> initialize(
-      {required String apiKey,
-      required BridgefyDelegate delegate,
-      BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
-      bool verboseLogging = false}) {
+  Future<void> initialize({
+    required String apiKey,
+    required BridgefyDelegate delegate,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    bool verboseLogging = false,
+  }) {
     throw UnimplementedError('initialize() has not been implemented.');
   }
 
@@ -46,10 +47,10 @@ abstract class BridgefyPlatform extends PlatformInterface {
     throw UnimplementedError('destroySession() has not been implemented.');
   }
 
-  Future<String> send(
-      {required Uint8List data,
-      required BridgefyTransmissionMode transmissionMode,
-      String? userID}) {
+  Future<String> send({
+    required Uint8List data,
+    required BridgefyTransmissionMode transmissionMode,
+  }) {
     throw UnimplementedError('send() has not been implemented.');
   }
 
@@ -63,5 +64,5 @@ abstract class BridgefyPlatform extends PlatformInterface {
 
   Future<List<String>> get connectedPeers;
 
-  Future<DateTime> get licenseExpirationDate;
+  Future<DateTime?> get licenseExpirationDate;
 }

@@ -32,15 +32,16 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   @override
-  Future<String> send(
-      {required Uint8List data,
-      required BridgefyTransmissionMode transmissionMode,
-      String? userID}) {
-    return methodChannel.invokeMethod('send', {
+  Future<String> send({
+    required Uint8List data,
+    required BridgefyTransmissionMode transmissionMode,
+  }) async {
+    final result = await methodChannel.invokeMethod('send', {
       "data": data,
       "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
-      "userID": userID
-    }) as Future<String>;
+    });
+    _throwIfError(result);
+    return result["messageId"] as String;
   }
 
   @override
@@ -53,16 +54,25 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       methodChannel.invokeMethod('connectedPeers') as Future<List<String>>;
 
   @override
-  Future<String> get currentUserID => methodChannel.invokeMethod('currentUserID') as Future<String>;
-
-  @override
-  Future<void> establishSecureConnection({required String userID}) {
-    return methodChannel.invokeMethod('establishSecureConnection', {"userID": userID});
+  Future<String> get currentUserID async {
+    final result = await methodChannel.invokeMethod('currentUserID');
+    return result["userId"] as String;
   }
 
   @override
-  Future<DateTime> get licenseExpirationDate =>
-      methodChannel.invokeMethod('licenseExpirationDate') as Future<DateTime>;
+  Future<void> establishSecureConnection({required String userID}) {
+    return methodChannel.invokeMethod('establishSecureConnection', {"userId": userID});
+  }
+
+  @override
+  Future<DateTime?> get licenseExpirationDate async {
+    final result = await methodChannel.invokeMethod('licenseExpirationDate');
+    final interval = result["licenseExpirationDate"];
+    if (interval) {
+      return DateTime.fromMillisecondsSinceEpoch(interval);
+    }
+    return null;
+  }
 
   void _throwIfError(dynamic result) {
     final error = _errorFromResult(result);

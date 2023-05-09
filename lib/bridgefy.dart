@@ -200,16 +200,18 @@ class Bridgefy {
   ///     propagation of messages.
   ///   - delegate: Delegate that handles Bridgefy SDK events.
   ///   - verboseLogging: The log level.
-  Future<void> initialize(
-      {required String apiKey,
-      required BridgefyDelegate delegate,
-      BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
-      bool verboseLogging = false}) async {
+  Future<void> initialize({
+    required String apiKey,
+    required BridgefyDelegate delegate,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    bool verboseLogging = false,
+  }) async {
     await BridgefyPlatform.instance.initialize(
-        apiKey: apiKey,
-        propagationProfile: propagationProfile,
-        delegate: delegate,
-        verboseLogging: verboseLogging);
+      apiKey: apiKey,
+      propagationProfile: propagationProfile,
+      delegate: delegate,
+      verboseLogging: verboseLogging,
+    );
   }
 
   /// Start Bridgefy SDK operations
@@ -233,12 +235,14 @@ class Bridgefy {
   ///   - data: The message data
   ///   - transmissionMode: The mode used to propagate a message through nearby devices.
   /// - Returns: The id of the message that was sent.
-  Future<String> send(
-      {required Uint8List data,
-      required BridgefyTransmissionMode transmissionMode,
-      String? userID}) {
-    return BridgefyPlatform.instance
-        .send(data: data, transmissionMode: transmissionMode, userID: userID);
+  Future<String> send({
+    required Uint8List data,
+    required BridgefyTransmissionMode transmissionMode,
+  }) {
+    return BridgefyPlatform.instance.send(
+      data: data,
+      transmissionMode: transmissionMode,
+    );
   }
 
   /// Function to update the license
@@ -263,7 +267,7 @@ class Bridgefy {
   }
 
   /// Returns license expiration date
-  Future<DateTime> get licenseExpirationDate {
+  Future<DateTime?> get licenseExpirationDate {
     return BridgefyPlatform.instance.licenseExpirationDate;
   }
 }

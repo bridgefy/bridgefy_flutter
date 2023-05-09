@@ -131,70 +131,66 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   // MARK: Methods
 
   private func initialize(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if let args = call.arguments as? Dictionary<String, Any>,
-       let apiKey = args["apiKey"] as? String,
-       let profileStr = args["propagationProfile"] as? String,
-       let propagationProfile = propagationProfile(from: profileStr),
-       let verboseLogging = args["verboseLogging"] as? Bool {
-      do {
-        bridgefy = try Bridgefy(withApiKey: apiKey,
-                                propagationProfile: propagationProfile,
-                                delegate: self,
-                                verboseLogging: verboseLogging)
-        result(nil)
-      } catch let error as BridgefyError {
-        result(["error": errorDictionary(from: error)])
-      } catch {
-        result(nil)
-      }
-    } else {
+    let args = call.arguments as! Dictionary<String, Any>
+    let apiKey = args["apiKey"] as! String
+    let profileStr = args["propagationProfile"] as! String
+    let propagationProfile = propagationProfile(from: profileStr)!
+    let verboseLogging = args["verboseLogging"] as! Bool
+    do {
+      bridgefy = try Bridgefy(withApiKey: apiKey,
+                              propagationProfile: propagationProfile,
+                              delegate: self,
+                              verboseLogging: verboseLogging)
       result(nil)
+    } catch let error {
+      result(["error": errorDictionary(from: error as! BridgefyError)])
     }
   }
 
   private func start(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    bridgefy?.start()
+    bridgefy!.start()
     result(nil)
   }
 
   private func send(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    if let bridgefy = bridgefy,
-       let args = call.arguments as? Dictionary<String, Any>,
-       let data = args["data"] as? Data,
-       let transmissionMode = args["transmissionMode"] as? TransmissionMode {
-      do {
-        let uuid = try bridgefy.send(data, using: transmissionMode)
-        result(["messageID": uuid.uuidString])
-      } catch let error as BridgefyError {
-        result(["error": errorDictionary(from: error)])
-      } catch {
-        result(nil)
-      }
-    } else {
-      result(nil)
+    let args = call.arguments as! Dictionary<String, Any>
+    let data = args["data"] as! Data
+    let transmissionModeDict = args["transmissionMode"] as! Dictionary<String, String>;
+    let transmissionMode = transmissionMode(from: transmissionModeDict)!
+    do {
+      let uuid = try bridgefy!.send(data, using: transmissionMode)
+      result(["messageId": uuid.uuidString])
+    } catch let error {
+      result(["error": errorDictionary(from: error as! BridgefyError)])
     }
   }
 
   private func stop(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    bridgefy?.stop()
+    bridgefy!.stop()
     result(nil)
   }
 
   private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    // TODO
+    result(bridgefy!.connectedPeers.map({ uuid in
+      uuid.uuidString
+    }))
   }
 
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    // TODO
+    result(["userId": bridgefy!.currentUserId])
   }
 
   private func establishSecureConnection(_ call: FlutterMethodCall,
                                          result: @escaping FlutterResult) {
-    // TODO
+    let args = call.arguments as! Dictionary<String, Any>
+    let uuidStr = args["userId"] as! String
+    let uuid = UUID(uuidString: uuidStr)!
+    bridgefy!.establishSecureConnection(with: uuid)
+    result(nil)
   }
 
   private func licenseExpirationDate(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    // TODO
+    result(["licenseExpirationDate": bridgefy!.licenseExpirationDate?.timeIntervalSince1970])
   }
 
   // MARK: Utils
