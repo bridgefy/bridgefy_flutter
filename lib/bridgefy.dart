@@ -27,8 +27,15 @@ class BridgefyTransmissionMode {
   BridgefyTransmissionModeType type;
   String uuid;
 
-  BridgefyTransmissionMode({required String name, required this.uuid})
-      : type = BridgefyTransmissionModeType.values.byName(name);
+  BridgefyTransmissionMode({
+    required this.type,
+    required this.uuid,
+  });
+
+  @override
+  String toString() {
+    return "BridgefyTransmissionMode (type: ${type.name}, uuid: $uuid)";
+  }
 }
 
 /// Describes errors in the Bridgefy error domain.
@@ -119,7 +126,10 @@ class BridgefyError implements Exception {
   BridgefyErrorType type;
   int? code;
 
-  BridgefyError({required String name, this.code}) : type = BridgefyErrorType.values.byName(name);
+  BridgefyError({
+    required this.type,
+    this.code,
+  });
 
   @override
   String toString() {

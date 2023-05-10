@@ -12,16 +12,20 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   BridgefyDelegate? _delegate;
 
   @override
-  Future<void> initialize(
-      {required String apiKey,
-      required BridgefyDelegate delegate,
-      BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
-      bool verboseLogging = false}) async {
-    final value = await methodChannel.invokeMethod('initialize', {
-      "apiKey": apiKey,
-      "propagationProfile": propagationProfile.name,
-      "verboseLogging": verboseLogging,
-    });
+  Future<void> initialize({
+    required String apiKey,
+    required BridgefyDelegate delegate,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    bool verboseLogging = false,
+  }) async {
+    final value = await methodChannel.invokeMethod(
+      'initialize',
+      {
+        "apiKey": apiKey,
+        "propagationProfile": propagationProfile.name,
+        "verboseLogging": verboseLogging,
+      },
+    );
     _throwIfError(value);
     _configureDelegate(delegate);
   }
@@ -36,10 +40,13 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     required Uint8List data,
     required BridgefyTransmissionMode transmissionMode,
   }) async {
-    final result = await methodChannel.invokeMethod('send', {
-      "data": data,
-      "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
-    });
+    final result = await methodChannel.invokeMethod(
+      'send',
+      {
+        "data": data,
+        "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
+      },
+    );
     _throwIfError(result);
     return result["messageId"] as String;
   }
@@ -84,14 +91,20 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   BridgefyError? _errorFromResult(dynamic result) {
     if (result is Map && result.containsKey("error")) {
       final error = result["error"];
-      return BridgefyError(name: error["type"], code: error["code"]);
+      return BridgefyError(
+        type: BridgefyErrorType.values.byName(error["type"]),
+        code: error["code"],
+      );
     }
     return null;
   }
 
   BridgefyTransmissionMode? _transmissionModeFromResult(dynamic result) {
     if (result is Map && result.containsKey("transmissionMode")) {
-      return BridgefyTransmissionMode(name: result["mode"], uuid: result["uuid"]);
+      return BridgefyTransmissionMode(
+        type: BridgefyTransmissionModeType.values.byName(result["mode"]),
+        uuid: result["uuid"],
+      );
     }
     return null;
   }
@@ -130,24 +143,27 @@ class MethodChannelBridgefy extends BridgefyPlatform {
           break;
         case "bridgefyDidFailToEstablishSecureConnection":
           _delegate?.bridgefyDidFailToEstablishSecureConnection(
-              userID: call.arguments['userId'] as String, error: _errorFromResult(call.arguments)!);
+            userID: call.arguments['userId'] as String,
+            error: _errorFromResult(call.arguments)!,
+          );
           break;
         case "bridgefyDidSendMessage":
           _delegate?.bridgefyDidSendMessage(messageID: call.arguments['messageId'] as String);
           break;
         case "bridgefyDidFailSendingMessage":
           _delegate?.bridgefyDidFailSendingMessage(
-              messageID: call.arguments['messageId'] as String,
-              error: _errorFromResult(call.arguments)!);
+            messageID: call.arguments['messageId'] as String,
+            error: _errorFromResult(call.arguments)!,
+          );
           break;
         case "bridgefyDidReceiveData":
           _delegate?.bridgefyDidReceiveData(
-              data: call.arguments['data'] as Uint8List,
-              messageId: call.arguments['messageId'] as String,
-              transmissionMode: _transmissionModeFromResult(call.arguments)!);
+            data: call.arguments['data'] as Uint8List,
+            messageId: call.arguments['messageId'] as String,
+            transmissionMode: _transmissionModeFromResult(call.arguments)!,
+          );
           break;
         default:
-          // print("Warning: received unhandled delegate method: ${call.method}");
           break;
       }
     });
