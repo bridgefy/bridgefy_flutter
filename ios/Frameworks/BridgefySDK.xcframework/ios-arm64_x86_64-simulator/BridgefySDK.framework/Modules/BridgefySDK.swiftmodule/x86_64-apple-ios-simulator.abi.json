@@ -2071,6 +2071,13 @@
       },
       {
         "kind": "Import",
+        "name": "CryptoKit",
+        "printedName": "CryptoKit",
+        "declKind": "Import",
+        "moduleName": "BridgefySDK"
+      },
+      {
+        "kind": "Import",
         "name": "Foundation",
         "printedName": "Foundation",
         "declKind": "Import",
@@ -3843,35 +3850,35 @@
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MessageOperators\/BLE\/BLEHandshakeManager.swift",
       "kind": "StringLiteral",
-      "offset": 4119,
+      "offset": 4136,
       "length": 22,
       "value": "\"Invalid message type\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MessageOperators\/BLE\/BLEHandshakeManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 4389,
+      "offset": 4378,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MessageOperators\/BLE\/BLEHandshakeManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8673,
+      "offset": 8779,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MessageOperators\/BLE\/BLEHandshakeManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 8754,
+      "offset": 8860,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MessageOperators\/BLE\/BLEHandshakeManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 11121,
+      "offset": 11227,
       "length": 1,
       "value": "1"
     },
@@ -4711,35 +4718,49 @@
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
       "kind": "StringLiteral",
-      "offset": 13196,
+      "offset": 13203,
       "length": 55,
       "value": "\"Cannot delete SessionRecord for user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
       "kind": "StringLiteral",
-      "offset": 13250,
+      "offset": 13257,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
       "kind": "StringLiteral",
-      "offset": 13467,
+      "offset": 13412,
+      "length": 46,
+      "value": "\"Cannot delete data for user: \""
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
+      "kind": "StringLiteral",
+      "offset": 13457,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
+      "kind": "StringLiteral",
+      "offset": 13674,
       "length": 48,
       "value": "\"Did delete \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
       "kind": "StringLiteral",
-      "offset": 13487,
+      "offset": 13694,
       "length": 8,
       "value": "\" sessions for user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalProtocolStore.swift",
       "kind": "StringLiteral",
-      "offset": 13514,
+      "offset": 13721,
       "length": 2,
       "value": "\"\""
     },
@@ -4767,84 +4788,84 @@
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 3144,
+      "offset": 3130,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 3843,
+      "offset": 3829,
       "length": 1,
       "value": "3"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 3903,
+      "offset": 3889,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 6064,
+      "offset": 6043,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 6551,
+      "offset": 6530,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 8585,
+      "offset": 8550,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 8590,
+      "offset": 8555,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 8677,
+      "offset": 8642,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "IntegerLiteral",
-      "offset": 8682,
+      "offset": 8647,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 10344,
+      "offset": 10309,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 10488,
+      "offset": 10453,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/MeshManager\/MeshManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 10563,
+      "offset": 10528,
       "length": 4,
       "value": "true"
     },
@@ -5707,7 +5728,7 @@
       "kind": "IntegerLiteral",
       "offset": 401,
       "length": 1,
-      "value": "1"
+      "value": "2"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Utils\/SDKVersion.swift",
@@ -6251,9 +6272,37 @@
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/AES\/AES.swift",
       "kind": "IntegerLiteral",
-      "offset": 957,
+      "offset": 989,
       "length": 1,
       "value": "0"
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/AES\/AES.swift",
+      "kind": "IntegerLiteral",
+      "offset": 993,
+      "length": 2,
+      "value": "12"
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/AES\/AES.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1048,
+      "length": 2,
+      "value": "12"
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/AES\/AES.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1074,
+      "length": 2,
+      "value": "16"
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/AES\/AES.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1144,
+      "length": 2,
+      "value": "16"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/API\/PropagationProfile.swift",
@@ -7427,14 +7476,21 @@
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Repositories\/KeychainRepository\/KeychainAccessManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 1609,
+      "offset": 1527,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Repositories\/KeychainRepository\/KeychainAccessManager.swift",
       "kind": "BooleanLiteral",
-      "offset": 1654,
+      "offset": 1758,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Repositories\/KeychainRepository\/KeychainAccessManager.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1803,
       "length": 4,
       "value": "true"
     },
@@ -8413,176 +8469,190 @@
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
+      "kind": "StringLiteral",
+      "offset": 3002,
+      "length": 65,
+      "value": "\"Cannot create address to delete session for user: \""
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
+      "kind": "StringLiteral",
+      "offset": 3066,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "BooleanLiteral",
-      "offset": 3339,
+      "offset": 3458,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "BooleanLiteral",
-      "offset": 3671,
+      "offset": 3790,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "BooleanLiteral",
-      "offset": 3753,
+      "offset": 3872,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 4058,
+      "offset": 4177,
       "length": 61,
       "value": "\"Cannot create remote address for remote name: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 4118,
+      "offset": 4237,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 4590,
+      "offset": 4709,
       "length": 24,
       "value": "\"Cannot encrypt message\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5148,
+      "offset": 5267,
       "length": 52,
       "value": "\"Cannot get ProtocolAddress for user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5199,
+      "offset": 5318,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5465,
+      "offset": 5584,
       "length": 54,
       "value": "\"Will decrypt preKey message from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5518,
+      "offset": 5637,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5698,
+      "offset": 5817,
       "length": 55,
       "value": "\"Will decrypt whisper message from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5752,
+      "offset": 5871,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 5934,
+      "offset": 6053,
       "length": 29,
       "value": "\"Unknown Signal message type\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "IntegerLiteral",
-      "offset": 6154,
+      "offset": 6273,
       "length": 4,
       "value": "5200"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "IntegerLiteral",
-      "offset": 6854,
+      "offset": 6973,
       "length": 1,
       "value": "2"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "BooleanLiteral",
-      "offset": 7525,
+      "offset": 7644,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 7842,
+      "offset": 7961,
       "length": 69,
       "value": "\"Cannot parse data as SignalMessage from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 7910,
+      "offset": 8029,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 8371,
+      "offset": 8490,
       "length": 63,
       "value": "\"Cannot decrypt SignalMessage from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 8433,
+      "offset": 8552,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 8787,
+      "offset": 8906,
       "length": 75,
       "value": "\"Cannot parse data as PreKeySignalMessage from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 8861,
+      "offset": 8980,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 9518,
+      "offset": 9637,
       "length": 69,
       "value": "\"Cannot decrypt PreKeySignalMessage from user: \""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "StringLiteral",
-      "offset": 9586,
+      "offset": 9705,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/guillermo\/Developer\/bridgefy-sdk-ios\/BridgefySDK\/Sources\/Modules\/EncryptionManager\/Signal\/BFSignalKeyHelper.swift",
       "kind": "IntegerLiteral",
-      "offset": 10139,
+      "offset": 10258,
       "length": 1,
       "value": "1"
     }

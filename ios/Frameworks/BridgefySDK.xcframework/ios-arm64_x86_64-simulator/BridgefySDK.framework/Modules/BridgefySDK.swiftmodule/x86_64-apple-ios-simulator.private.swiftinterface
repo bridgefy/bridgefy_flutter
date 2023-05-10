@@ -5,6 +5,7 @@
 @_exported import BridgefySDK
 import CommonCrypto
 import CoreBluetooth
+import CryptoKit
 import Foundation
 import Swift
 import UIKit
