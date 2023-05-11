@@ -51,7 +51,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidStart(with userId: UUID) {
     channel.invokeMethod("bridgefyDidStart",
-                         arguments: ["userId": userId])
+                         arguments: ["userId": userId.uuidString])
   }
 
   public func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
@@ -81,38 +81,38 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidConnect(with userId: UUID) {
     channel.invokeMethod("bridgefyDidConnect",
-                         arguments: ["userId": userId])
+                         arguments: ["userId": userId.uuidString])
   }
 
   public func bridgefyDidDisconnect(from userId: UUID) {
     channel.invokeMethod("bridgefyDidDisconnect",
-                         arguments: ["userId": userId])
+                         arguments: ["userId": userId.uuidString])
   }
 
   public func bridgefyDidEstablishSecureConnection(with userId: UUID) {
     channel.invokeMethod("bridgefyDidEstablishSecureConnection",
-                         arguments: ["userId": userId])
+                         arguments: ["userId": userId.uuidString])
   }
 
   public func bridgefyDidFailToEstablishSecureConnection(with userId: UUID,
                                                          error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToEstablishSecureConnection",
                          arguments: [
-                          "userId": userId,
+                          "userId": userId.uuidString,
                           "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
 
   public func bridgefyDidSendMessage(with messageId: UUID) {
     channel.invokeMethod("bridgefyDidSendMessage",
-                         arguments: ["messageId": messageId])
+                         arguments: ["messageId": messageId.uuidString])
   }
 
   public func bridgefyDidFailSendingMessage(with messageId: UUID,
                                             withError error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
                          arguments: [
-                          "messageId": messageId,
+                          "messageId": messageId.uuidString,
                           "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
@@ -123,7 +123,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidReceiveData",
                          arguments: [
                           "data": data,
-                          "messageId": messageId,
+                          "messageId": messageId.uuidString,
                           "transmissionMode": transmissionModeDictionary(from: transmissionMode)
                          ] as [String : Any])
   }
@@ -154,11 +154,11 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   private func send(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     let args = call.arguments as! Dictionary<String, Any>
-    let data = args["data"] as! Data
+    let data = args["data"] as! FlutterStandardTypedData
     let transmissionModeDict = args["transmissionMode"] as! Dictionary<String, String>;
     let transmissionMode = transmissionMode(from: transmissionModeDict)!
     do {
-      let uuid = try bridgefy!.send(data, using: transmissionMode)
+      let uuid = try bridgefy!.send(data.data, using: transmissionMode)
       result(["messageId": uuid.uuidString])
     } catch let error {
       result(["error": errorDictionary(from: error as! BridgefyError)])
@@ -177,7 +177,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(["userId": bridgefy!.currentUserId])
+    result(["userId": bridgefy!.currentUserId.uuidString])
   }
 
   private func establishSecureConnection(_ call: FlutterMethodCall,
