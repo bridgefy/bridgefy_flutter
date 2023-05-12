@@ -18,6 +18,17 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "http://104.196.228.98:8081/artifactory/libs-snapshot-local"
+            credentials {
+                username "bridgefy-beta"
+                password "g\$thaP@ad8w=w=OT78_r"
+            }
+            authentication {
+                digest(BasicAuthentication)
+            }
+            allowInsecureProtocol = true
+        }
     }
 }
 
@@ -42,5 +53,11 @@ android {
 
     defaultConfig {
         minSdkVersion 16
+    }
+}
+
+dependencies {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "0.4.0-SNAPSHOT", ext: "aar") {
+        transitive = true
     }
 }
