@@ -29,7 +29,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       );
       _configureDelegate(delegate);
     } on PlatformException catch (e) {
-      throw BridgefyError(e);
+      throw _bridgefyException(e);
     }
   }
 
@@ -53,7 +53,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       );
       return result["messageId"] as String;
     } on PlatformException catch (e) {
-      throw BridgefyError(e);
+      throw _bridgefyException(e);
     }
   }
 
@@ -87,14 +87,27 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     return null;
   }
 
-  BridgefyTransmissionMode? _transmissionModeFromResult(dynamic result) {
-    if (result is Map && result.containsKey("transmissionMode")) {
-      return BridgefyTransmissionMode(
-        type: BridgefyTransmissionModeType.values.byName(result["mode"]),
-        uuid: result["uuid"],
-      );
-    }
-    return null;
+  BridgefyTransmissionMode _transmissionMode(dynamic result) {
+    return BridgefyTransmissionMode(
+      type: BridgefyTransmissionModeType.values.byName(result["mode"]),
+      uuid: result["uuid"],
+    );
+  }
+
+  BridgefyError _bridgefyError(dynamic result) {
+    return BridgefyError(
+      type: BridgefyErrorType.values.byName(result["error"]["code"]),
+      code: result["error"]["details"],
+      message: result["error"]["message"],
+    );
+  }
+
+  BridgefyError _bridgefyException(PlatformException exception) {
+    return BridgefyError(
+      type: BridgefyErrorType.values.byName(exception.code),
+      code: exception.details,
+      message: exception.message,
+    );
   }
 
   void _configureDelegate(BridgefyDelegate delegate) {
@@ -105,13 +118,17 @@ class MethodChannelBridgefy extends BridgefyPlatform {
           _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
           break;
         case "bridgefyDidFailToStart":
-          _delegate?.bridgefyDidFailToStart(error: BridgefyError(call.arguments["error"]));
+          _delegate?.bridgefyDidFailToStart(
+            error: _bridgefyError(call.arguments),
+          );
           break;
         case "bridgefyDidStop":
           _delegate?.bridgefyDidStop();
           break;
         case "bridgefyDidFailToStop":
-          _delegate?.bridgefyDidFailToStop(error: BridgefyError(call.arguments["error"]));
+          _delegate?.bridgefyDidFailToStop(
+            error: _bridgefyError(call.arguments),
+          );
           break;
         case "bridgefyDidDestroySession":
           _delegate?.bridgefyDidDestroySession();
@@ -132,7 +149,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         case "bridgefyDidFailToEstablishSecureConnection":
           _delegate?.bridgefyDidFailToEstablishSecureConnection(
             userID: call.arguments['userId'] as String,
-            error: BridgefyError(call.arguments["error"]),
+            error: _bridgefyError(call.arguments),
           );
           break;
         case "bridgefyDidSendMessage":
@@ -141,14 +158,14 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         case "bridgefyDidFailSendingMessage":
           _delegate?.bridgefyDidFailSendingMessage(
             messageID: call.arguments['messageId'] as String,
-            error: BridgefyError(call.arguments["error"]),
+            error: _bridgefyError(call.arguments),
           );
           break;
         case "bridgefyDidReceiveData":
           _delegate?.bridgefyDidReceiveData(
             data: call.arguments['data'] as Uint8List,
             messageId: call.arguments['messageId'] as String,
-            transmissionMode: _transmissionModeFromResult(call.arguments)!,
+            transmissionMode: _transmissionMode(call.arguments),
           );
           break;
         default:

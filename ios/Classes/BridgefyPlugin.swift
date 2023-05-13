@@ -57,7 +57,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStart",
-                         arguments: ["error": flutterError(from: error)])
+                         arguments: ["error": errorDictionary(from: error)])
   }
 
   public func bridgefyDidStop() {
@@ -67,7 +67,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStop(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStop",
-                         arguments: ["error": flutterError(from: error)])
+                         arguments: ["error": errorDictionary(from: error)])
   }
 
   public func bridgefyDidDestroySession() {
@@ -100,7 +100,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidFailToEstablishSecureConnection",
                          arguments: [
                           "userId": userId.uuidString,
-                          "error": flutterError(from: error)
+                          "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
 
@@ -114,7 +114,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
                          arguments: [
                           "messageId": messageId.uuidString,
-                          "error": flutterError(from: error)
+                          "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
 
@@ -245,7 +245,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     }
   }
 
-  private func flutterError(from bridgefyError: BridgefyError) -> FlutterError {
+  private func errorDictionary(from bridgefyError: BridgefyError) -> Dictionary<String, Any?> {
     var type: String
     var details: Int?
     switch bridgefyError {
@@ -338,8 +338,17 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
       details = code
       break;
     @unknown default:
-      return FlutterError()
+      return [:]
     }
-    return FlutterError(code: type, message: bridgefyError.localizedDescription, details: details)
+    return ["code": type, "message": bridgefyError.localizedDescription, "details": details]
+  }
+
+  private func flutterError(from bridgefyError: BridgefyError) -> FlutterError {
+    let dict = errorDictionary(from: bridgefyError)
+    return FlutterError(
+      code: dict["type"] as! String,
+      message: dict["message"] as? String,
+      details: dict["details"] as? Int
+    )
   }
 }

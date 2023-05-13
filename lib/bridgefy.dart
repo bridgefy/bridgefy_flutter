@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
@@ -31,7 +32,7 @@ class BridgefyTransmissionMode {
 
   BridgefyTransmissionMode({
     required this.type,
-    required this.uuid,
+    required this.uuid
   });
 
   @override
@@ -129,10 +130,7 @@ class BridgefyError implements Exception {
   int? code;
   String? message;
 
-  BridgefyError(PlatformException platformException)
-      : type = BridgefyErrorType.values.byName(platformException.code),
-        code = platformException.details,
-        message = platformException.message;
+  BridgefyError({required this.type, this.code, this.message});
 
   @override
   String toString() {
