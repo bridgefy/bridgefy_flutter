@@ -18,16 +18,19 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) async {
-    final value = await methodChannel.invokeMethod(
-      'initialize',
-      {
-        "apiKey": apiKey,
-        "propagationProfile": propagationProfile.name,
-        "verboseLogging": verboseLogging,
-      },
-    );
-    _throwIfError(value);
-    _configureDelegate(delegate);
+    try {
+      await methodChannel.invokeMethod(
+        'initialize',
+        {
+          "apiKey": apiKey,
+          "propagationProfile": propagationProfile.name,
+          "verboseLogging": verboseLogging,
+        },
+      );
+      _configureDelegate(delegate);
+    } on PlatformException catch (e) {
+      throw BridgefyError(e);
+    }
   }
 
   @override
@@ -40,15 +43,18 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     required Uint8List data,
     required BridgefyTransmissionMode transmissionMode,
   }) async {
-    final result = await methodChannel.invokeMethod(
-      'send',
-      {
-        "data": data,
-        "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
-      },
-    );
-    _throwIfError(result);
-    return result["messageId"] as String;
+    try {
+      final result = await methodChannel.invokeMethod(
+        'send',
+        {
+          "data": data,
+          "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
+        },
+      );
+      return result["messageId"] as String;
+    } on PlatformException catch (e) {
+      throw BridgefyError(e);
+    }
   }
 
   @override
@@ -81,24 +87,6 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     return null;
   }
 
-  void _throwIfError(dynamic result) {
-    final error = _errorFromResult(result);
-    if (error != null) {
-      throw error;
-    }
-  }
-
-  BridgefyError? _errorFromResult(dynamic result) {
-    if (result is Map && result.containsKey("error")) {
-      final error = result["error"];
-      return BridgefyError(
-        type: BridgefyErrorType.values.byName(error["type"]),
-        code: error["code"],
-      );
-    }
-    return null;
-  }
-
   BridgefyTransmissionMode? _transmissionModeFromResult(dynamic result) {
     if (result is Map && result.containsKey("transmissionMode")) {
       return BridgefyTransmissionMode(
@@ -117,13 +105,13 @@ class MethodChannelBridgefy extends BridgefyPlatform {
           _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
           break;
         case "bridgefyDidFailToStart":
-          _delegate?.bridgefyDidFailToStart(error: _errorFromResult(call.arguments)!);
+          _delegate?.bridgefyDidFailToStart(error: BridgefyError(call.arguments["error"]));
           break;
         case "bridgefyDidStop":
           _delegate?.bridgefyDidStop();
           break;
         case "bridgefyDidFailToStop":
-          _delegate?.bridgefyDidFailToStop(error: _errorFromResult(call.arguments)!);
+          _delegate?.bridgefyDidFailToStop(error: BridgefyError(call.arguments["error"]));
           break;
         case "bridgefyDidDestroySession":
           _delegate?.bridgefyDidDestroySession();
@@ -144,7 +132,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         case "bridgefyDidFailToEstablishSecureConnection":
           _delegate?.bridgefyDidFailToEstablishSecureConnection(
             userID: call.arguments['userId'] as String,
-            error: _errorFromResult(call.arguments)!,
+            error: BridgefyError(call.arguments["error"]),
           );
           break;
         case "bridgefyDidSendMessage":
@@ -153,7 +141,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         case "bridgefyDidFailSendingMessage":
           _delegate?.bridgefyDidFailSendingMessage(
             messageID: call.arguments['messageId'] as String,
-            error: _errorFromResult(call.arguments)!,
+            error: BridgefyError(call.arguments["error"]),
           );
           break;
         case "bridgefyDidReceiveData":

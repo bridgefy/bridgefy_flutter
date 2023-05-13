@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart';
+
 import 'bridgefy_platform_interface.dart';
 
 /// Profile that defines a series of properties and rules for the propagation of messages.
@@ -125,15 +127,16 @@ enum BridgefyErrorType {
 class BridgefyError implements Exception {
   BridgefyErrorType type;
   int? code;
+  String? message;
 
-  BridgefyError({
-    required this.type,
-    this.code,
-  });
+  BridgefyError(PlatformException platformException)
+      : type = BridgefyErrorType.values.byName(platformException.code),
+        code = platformException.details,
+        message = platformException.message;
 
   @override
   String toString() {
-    return "BridgefyError (type: ${type.name}, code: $code)";
+    return "BridgefyError (type: ${type.name}, code: $code, message: $message)";
   }
 }
 

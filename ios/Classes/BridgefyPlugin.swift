@@ -43,6 +43,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
       licenseExpirationDate(call, result: result)
       break
     default:
+      result(FlutterMethodNotImplemented)
       break
     }
   }
@@ -56,7 +57,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStart",
-                         arguments: ["error": errorDictionary(from: error)])
+                         arguments: ["error": flutterError(from: error)])
   }
 
   public func bridgefyDidStop() {
@@ -66,7 +67,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidFailToStop(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToStop",
-                         arguments: ["error": errorDictionary(from: error)])
+                         arguments: ["error": flutterError(from: error)])
   }
 
   public func bridgefyDidDestroySession() {
@@ -99,7 +100,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidFailToEstablishSecureConnection",
                          arguments: [
                           "userId": userId.uuidString,
-                          "error": errorDictionary(from: error)
+                          "error": flutterError(from: error)
                          ] as [String : Any])
   }
 
@@ -113,7 +114,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
                          arguments: [
                           "messageId": messageId.uuidString,
-                          "error": errorDictionary(from: error)
+                          "error": flutterError(from: error)
                          ] as [String : Any])
   }
 
@@ -143,7 +144,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
                               verboseLogging: verboseLogging)
       result(nil)
     } catch let error {
-      result(["error": errorDictionary(from: error as! BridgefyError)])
+      result(flutterError(from: error as! BridgefyError))
     }
   }
 
@@ -161,7 +162,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
       let uuid = try bridgefy!.send(data.data, using: transmissionMode)
       result(["messageId": uuid.uuidString])
     } catch let error {
-      result(["error": errorDictionary(from: error as! BridgefyError)])
+      result(flutterError(from: error as! BridgefyError))
     }
   }
 
@@ -244,66 +245,101 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     }
   }
 
-  private func errorDictionary(from bridgefyError: BridgefyError) -> Dictionary<String, Any> {
+  private func flutterError(from bridgefyError: BridgefyError) -> FlutterError {
+    var type: String
+    var details: Int?
     switch bridgefyError {
     case .licenseError(code: let code):
-      return ["type": "licenseError", "code": code]
+      type = "licenseError"
+      details = code
+      break
     case .simulatorIsNotSupported:
-      return ["type": "simulatorIsNotSupported"]
+      type = "simulatorIsNotSupported"
+      break
     case .notStarted:
-      return ["type": "notStarted"]
+      type = "notStarted"
+      break;
     case .alreadyInstantiated:
-      return ["type": "alreadyInstantiated"]
+      type = "alreadyInstantiated"
+      break;
     case .startInProgress:
-      return ["type": "startInProgress"]
+      type = "startInProgress"
+      break;
     case .alreadyStarted:
-      return ["type": "alreadyStarted"]
+      type = "alreadyStarted"
+      break;
     case .serviceNotStarted:
-      return ["type": "serviceNotStarted"]
+      type = "serviceNotStarted"
+      break;
     case .missingBundleID:
-      return ["type": "missingBundleID"]
+      type = "missingBundleID"
+      break;
     case .invalidAPIKey:
-      return ["type": "invalidAPIKey"]
+      type = "invalidAPIKey"
+      break;
     case .internetConnectionRequired:
-      return ["type": "internetConnectionRequired"]
+      type = "internetConnectionRequired"
+      break
     case .sessionError:
-      return ["type": "sessionError"]
+      type = "sessionError"
+      break
     case .expiredLicense:
-      return ["type": "expiredLicense"]
+      type = "expiredLicense"
+      break
     case .inconsistentDeviceTime:
-      return ["type": "inconsistentDeviceTime"]
+      type = "inconsistentDeviceTime"
+      break
     case .BLEUsageNotGranted:
-      return ["type": "BLEUsageNotGranted"]
+      type = "BLEUsageNotGranted"
+      break
     case .BLEUsageRestricted:
-      return ["type": "BLEUsageRestricted"]
+      type = "BLEUsageRestricted"
+      break
     case .BLEPoweredOff:
-      return ["type": "BLEPoweredOff"]
+      type = "BLEPoweredOff"
+      break
     case .BLEUnsupported:
-      return ["type": "BLEUnsupported"]
+      type = "BLEUnsupported"
+      break
     case .BLEUnknownError:
-      return ["type": "BLEUnknownError"]
+      type = "BLEUnknownError"
+      break
     case .inconsistentConnection:
-      return ["type": "inconsistentConnection"]
+      type = "inconsistentConnection"
+      break
     case .connectionIsAlreadySecure:
-      return ["type": "connectionIsAlreadySecure"]
+      type = "connectionIsAlreadySecure"
+      break
     case .cannotCreateSecureConnection:
-      return ["type": "cannotCreateSecureConnection"]
+      type = "cannotCreateSecureConnection"
+      break
     case .dataLengthExceeded:
-      return ["type": "dataLengthExceeded"]
+      type = "dataLengthExceeded"
+      break
     case .dataValueIsEmpty:
-      return ["type": "dataValueIsEmpty"]
+      type = "dataValueIsEmpty"
+      break
     case .peerIsNotConnected:
-      return ["type": "peerIsNotConnected"]
+      type = "peerIsNotConnected"
+      break
     case .internalError:
-      return ["type": "internalError"]
+      type = "internalError"
+      break
     case .storageError(code: let code):
-      return ["type": "storageError", "code": code]
+      type = "storageError"
+      details = code
+      break
     case .encodingError(code: let code):
-      return ["type": "encodingError", "code": code]
+      type = "encodingError"
+      details = code
+      break
     case .encryptionError(code: let code):
-      return ["type": "encryptionError", "code": code]
+      type = "encryptionError"
+      details = code
+      break;
     @unknown default:
-      return [:]
+      return FlutterError()
     }
+    return FlutterError(code: type, message: bridgefyError.localizedDescription, details: details)
   }
 }
