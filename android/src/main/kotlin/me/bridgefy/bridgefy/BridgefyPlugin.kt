@@ -1,10 +1,8 @@
 package me.bridgefy.bridgefy
 
-import android.content.Context
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.FlutterException
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -14,7 +12,6 @@ import me.bridgefy.commons.TransmissionMode
 import me.bridgefy.commons.exception.BridgefyException
 import me.bridgefy.commons.listener.BridgefyDelegate
 import me.bridgefy.commons.propagation.PropagationProfile
-import java.util.Dictionary
 import java.util.UUID
 
 /** BridgefyPlugin */
@@ -130,10 +127,10 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidDisconnect", hashMapOf("userId" to userID.toString()))
   }
 
+  // TODO: iOS provides BridgefyError
   override fun onFailToSend(messageID: UUID) {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
       hashMapOf("messageId" to messageID.toString(), "error" to null))
-    TODO("Null error")
   }
 
   override fun onFailToStart(error: BridgefyException) {
@@ -147,7 +144,8 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
   }
 
   override fun onProgressOfSend(messageID: UUID, position: Int, of: Int) {
-    TODO("Not yet implemented")
+    channel.invokeMethod("bridgefyDidSendDataProgress",
+      hashMapOf("messageId" to messageID.toString(), "position" to position, "of" to of))
   }
 
   override fun onReceive(data: ByteArray, messageID: UUID, transmissionMode: TransmissionMode) {

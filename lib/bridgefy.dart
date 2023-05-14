@@ -30,10 +30,7 @@ class BridgefyTransmissionMode {
   BridgefyTransmissionModeType type;
   String uuid;
 
-  BridgefyTransmissionMode({
-    required this.type,
-    required this.uuid
-  });
+  BridgefyTransmissionMode({required this.type, required this.uuid});
 
   @override
   String toString() {
@@ -58,81 +55,85 @@ enum BridgefyErrorType {
   /// An error occurred while creating the session
   sessionError,
 
-  // iOS
-
-  /// The Bridgefy SDK hasn't been started
+  /// (iOS) The Bridgefy SDK hasn't been started
   notStarted,
 
-  /// A Bridgefy SDK instance already exists
+  /// (iOS) A Bridgefy SDK instance already exists
   alreadyInstantiated,
 
-  /// The Bridgefy SDK is performing the start process
+  /// (iOS) The Bridgefy SDK is performing the start process
   startInProgress,
 
-  /// The Bridgefy SDK service is not started
+  /// (iOS) The Bridgefy SDK service is not started
   serviceNotStarted,
 
-  /// Cannot get app's bundle id
+  /// (iOS) Cannot get app's bundle id
   missingBundleID,
 
-  /// An internet connection is required to validate the license
+  /// (iOS) An internet connection is required to validate the license
   internetConnectionRequired,
 
-  /// The device's time has been modified
+  /// (iOS) The device's time has been modified
   inconsistentDeviceTime,
 
-  /// The user does not allow the use of BLE
+  /// (iOS) The user does not allow the use of BLE
   BLEUsageNotGranted,
 
-  /// The use of BLE in this device is restricted
+  /// (iOS) The use of BLE in this device is restricted
   BLEUsageRestricted,
 
-  /// The BLE antenna has been turned off
+  /// (iOS) The BLE antenna has been turned off
   BLEPoweredOff,
 
-  /// The usage of BLE is not supported in the device
+  /// (iOS) The usage of BLE is not supported in the device
   BLEUnsupported,
 
-  /// BLE usage failed with an unknown error
+  /// (iOS) BLE usage failed with an unknown error
   BLEUnknownError,
 
+  /// (iOS) Inconsistent connection
   inconsistentConnection,
 
+  /// (iOS) Connection is already secure
   connectionIsAlreadySecure,
 
+  /// (iOS) Cannot create secure connection
   cannotCreateSecureConnection,
 
-  /// The length of the data exceed the maximum limit
+  /// (iOS) The length of the data exceed the maximum limit
   dataLengthExceeded,
 
-  /// The data to send is empty
+  /// (iOS) The data to send is empty
   dataValueIsEmpty,
 
-  /// The requested peer is not connected
+  /// (iOS) The requested peer is not connected
   peerIsNotConnected,
 
-  /// An internal error occurred
+  /// (iOS) An internal error occurred
   internalError,
 
-  /// An error occurred while validating the license
+  /// (iOS) An error occurred while validating the license
   licenseError,
 
-  /// An error occurred while storing data
+  /// (iOS) An error occurred while storing data
   storageError,
 
-  /// An error occurred while encoding the message
+  /// (iOS) An error occurred while encoding the message
   encodingError,
 
-  /// An error occurred while encrypting the message
+  /// (iOS) An error occurred while encrypting the message
   encryptionError,
 
-  /// (Android)
+  /// (Android) Missing application ID
   missingApplicationId,
 
+  /// (Android) Permission exception
   permissionException,
 
+  /// (Android) Registration exception
   registrationException,
 
+  /// (Android) Size limit exceeded
   sizeLimitExceeded,
 }
 
@@ -199,7 +200,7 @@ mixin BridgefyDelegate {
   /// - Parameters:
   ///   - messageId: The id of the message that was tried to be sent
   ///   - error: Error reason.
-  void bridgefyDidFailSendingMessage({required String messageID, required BridgefyError error});
+  void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error});
 
   /// This function is called when a new message is received
   /// - Parameters:
@@ -210,6 +211,13 @@ mixin BridgefyDelegate {
     required Uint8List data,
     required String messageId,
     required BridgefyTransmissionMode transmissionMode,
+  });
+
+  /// Called when there is progress while transmitting data. Only available on Android.
+  void bridgefyDidSendDataProgress({
+    required String messageID,
+    required int position,
+    required int of,
   });
 }
 
