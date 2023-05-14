@@ -14,10 +14,8 @@ buildscript {
     }
 }
 
-allprojects {
+rootProject.allprojects {
     repositories {
-        google()
-        mavenCentral()
         maven {
             url "http://104.196.228.98:8081/artifactory/libs-snapshot-local"
             credentials {
@@ -29,6 +27,13 @@ allprojects {
             }
             allowInsecureProtocol = true
         }
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
     }
 }
 
@@ -52,12 +57,12 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
 }
 
 dependencies {
-    implementation (group: "me.bridgefy", name: "android-sdk", version: "0.4.0-SNAPSHOT", ext: "aar") {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "0.4.1-SNAPSHOT", ext: "aar") {
         transitive = true
     }
 }
