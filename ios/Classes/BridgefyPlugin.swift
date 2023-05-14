@@ -172,9 +172,9 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(bridgefy!.connectedPeers.map({ uuid in
+    result(["connectedPeers": bridgefy!.connectedPeers.map({ uuid in
       uuid.uuidString
-    }))
+    })])
   }
 
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

@@ -46,6 +46,20 @@ enum BridgefyErrorType {
   /// The Bridgefy SDK cannot run in the simulator
   simulatorIsNotSupported,
 
+  /// The Bridgefy SDK is already running
+  alreadyStarted,
+
+  /// The provided API key is not valid
+  invalidAPIKey,
+
+  /// The license is expired
+  expiredLicense,
+
+  /// An error occurred while creating the session
+  sessionError,
+
+  // iOS
+
   /// The Bridgefy SDK hasn't been started
   notStarted,
 
@@ -55,26 +69,14 @@ enum BridgefyErrorType {
   /// The Bridgefy SDK is performing the start process
   startInProgress,
 
-  /// The Bridgefy SDK is already running
-  alreadyStarted,
-
   /// The Bridgefy SDK service is not started
   serviceNotStarted,
 
   /// Cannot get app's bundle id
   missingBundleID,
 
-  /// The provided API key is not valid
-  invalidAPIKey,
-
   /// An internet connection is required to validate the license
   internetConnectionRequired,
-
-  /// An error occurred while creating the session
-  sessionError,
-
-  /// The license is expired
-  expiredLicense,
 
   /// The device's time has been modified
   inconsistentDeviceTime,
@@ -123,6 +125,15 @@ enum BridgefyErrorType {
 
   /// An error occurred while encrypting the message
   encryptionError,
+
+  /// (Android)
+  missingApplicationId,
+
+  permissionException,
+
+  registrationException,
+
+  sizeLimitExceeded,
 }
 
 class BridgefyError implements Exception {

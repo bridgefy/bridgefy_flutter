@@ -63,8 +63,10 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   @override
-  Future<List<String>> get connectedPeers =>
-      methodChannel.invokeMethod('connectedPeers') as Future<List<String>>;
+  Future<List<String>> get connectedPeers async {
+    final result = await methodChannel.invokeMethod('connectedPeers');
+    return result["connectedPeers"] as List<String>;
+  }
 
   @override
   Future<String> get currentUserID async {
