@@ -1,5 +1,7 @@
 package me.bridgefy.bridgefy
 
+import android.os.Handler
+import android.os.Looper
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -16,7 +18,7 @@ import java.util.UUID
 
 /** BridgefyPlugin */
 @Suppress("UNCHECKED_CAST")
-class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
+class BridgefyPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -54,7 +56,79 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
     val profileStr = args["propagationProfile"] as String
     val propagationProfile = propagationProfileFromString(profileStr)
     try {
-      bridgefy.init(UUID.fromString(apiKey), propagationProfile!!, this)
+      bridgefy.init(UUID.fromString(apiKey), propagationProfile!!, object : BridgefyDelegate {
+        override fun onConnected(userID: UUID) {
+          invokeDelegate("bridgefyDidConnect",
+            hashMapOf("userId" to userID.toString()))
+        }
+
+        override fun onConnectedPeers(connectedPeers: List<UUID>) {
+          connectedPeers.forEach {
+            onConnected(it)
+          }
+        }
+
+        override fun onConnectedSecurely(userID: UUID) {
+          invokeDelegate("bridgefyDidEstablishSecureConnection",
+            hashMapOf("userId" to userID.toString()))
+        }
+
+        override fun onDisconnected(userID: UUID) {
+          invokeDelegate("bridgefyDidDisconnect",
+            hashMapOf("userId" to userID.toString()))
+        }
+
+        // TODO: iOS provides BridgefyError
+        override fun onFailToSend(messageID: UUID) {
+          invokeDelegate("bridgefyDidFailSendingMessage",
+            hashMapOf("messageId" to messageID.toString(), "error" to null))
+        }
+
+        override fun onFailToStart(error: BridgefyException) {
+          invokeDelegate("bridgefyDidFailToStart",
+            hashMapOf("error" to mapFromBridgefyException(error)))
+        }
+
+        override fun onFailToStop(error: BridgefyException) {
+          invokeDelegate("bridgefyDidFailToStop",
+            hashMapOf("error" to mapFromBridgefyException(error)))
+        }
+
+        override fun onProgressOfSend(messageID: UUID, position: Int, of: Int) {
+          invokeDelegate("bridgefyDidSendDataProgress",
+            hashMapOf("messageId" to messageID.toString(), "position" to position, "of" to of))
+        }
+
+        override fun onReceive(data: ByteArray,
+                               messageID: UUID,
+                               transmissionMode: TransmissionMode) {
+          invokeDelegate(
+            "bridgefyDidReceiveData",
+            hashMapOf("data" to data,
+              "messageId" to messageID.toString(),
+              "transmissionMode" to mapFromTransmissionMode(transmissionMode)
+            )
+          )
+        }
+
+        override fun onSend(messageID: UUID) {
+          invokeDelegate("bridgefyDidSendMessage",
+            hashMapOf("messageId" to messageID.toString()))
+        }
+
+        override fun onStarted(userID: UUID) {
+          invokeDelegate("bridgefyDidStart",
+            hashMapOf("userId" to userID.toString()))
+        }
+
+        // TODO: bridgefyDidFailToEstablishSecureConnection
+        // TODO: bridgefyDidDestroySession
+        // TODO: bridgefyDidFailToDestroySession
+
+        override fun onStopped() {
+          invokeDelegate("bridgefyDidStop", null)
+        }
+      })
       result.success(null)
     } catch (error: BridgefyException) {
       val map = mapFromBridgefyException(error);
@@ -108,73 +182,6 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
     result.success(hashMapOf("licenseExpirationDate" to date?.time))
   }
 
-  override fun onConnected(userID: UUID) {
-     channel.invokeMethod("bridgefyDidConnect", hashMapOf("userId" to userID.toString()))
-  }
-
-  override fun onConnectedPeers(connectedPeers: List<UUID>) {
-    connectedPeers.forEach {
-      onConnected(it)
-    }
-  }
-
-  override fun onConnectedSecurely(userID: UUID) {
-    channel.invokeMethod("bridgefyDidEstablishSecureConnection",
-      hashMapOf("userId" to userID.toString()))
-  }
-
-  override fun onDisconnected(userID: UUID) {
-    channel.invokeMethod("bridgefyDidDisconnect", hashMapOf("userId" to userID.toString()))
-  }
-
-  // TODO: iOS provides BridgefyError
-  override fun onFailToSend(messageID: UUID) {
-    channel.invokeMethod("bridgefyDidFailSendingMessage",
-      hashMapOf("messageId" to messageID.toString(), "error" to null))
-  }
-
-  override fun onFailToStart(error: BridgefyException) {
-    channel.invokeMethod("bridgefyDidFailToStart",
-      hashMapOf("error" to mapFromBridgefyException(error)))
-  }
-
-  override fun onFailToStop(error: BridgefyException) {
-    channel.invokeMethod("bridgefyDidFailToStop",
-      hashMapOf("error" to mapFromBridgefyException(error)))
-  }
-
-  override fun onProgressOfSend(messageID: UUID, position: Int, of: Int) {
-    channel.invokeMethod("bridgefyDidSendDataProgress",
-      hashMapOf("messageId" to messageID.toString(), "position" to position, "of" to of))
-  }
-
-  override fun onReceive(data: ByteArray, messageID: UUID, transmissionMode: TransmissionMode) {
-    channel.invokeMethod(
-      "bridgefyDidReceiveData",
-      hashMapOf("data" to data,
-        "messageId" to messageID.toString(),
-        "transmissionMode" to mapFromTransmissionMode(transmissionMode)
-      )
-    )
-  }
-
-  override fun onSend(messageID: UUID) {
-    channel.invokeMethod("bridgefyDidSendMessage",
-      hashMapOf("messageId" to messageID.toString()))
-  }
-
-  override fun onStarted(userID: UUID) {
-    channel.invokeMethod("bridgefyDidStart", hashMapOf("userId" to userID.toString()))
-  }
-
-  // TODO: bridgefyDidFailToEstablishSecureConnection
-  // TODO: bridgefyDidDestroySession
-  // TODO: bridgefyDidFailToDestroySession
-
-  override fun onStopped() {
-    channel.invokeMethod("bridgefyDidStop", null)
-  }
-
   private fun mapFromBridgefyException(exception: BridgefyException): HashMap<String, Any?> {
     var code: String
     var details: Int? = null
@@ -193,10 +200,12 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
       }
       is BridgefyException.GenericException -> {
         code = "genericException"
+        message = exception.message
         details = exception.code
       }
       is BridgefyException.InconsistentDeviceTimeException -> {
         code = "inconsistentDeviceTimeException"
+        message = exception.error
       }
       is BridgefyException.InternetConnectionRequiredException -> {
         code = "internetConnectionRequiredException"
@@ -224,6 +233,7 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
       }
       is BridgefyException.SimulatorIsNotSupportedException -> {
         code = "simulatorIsNotSupported"
+        message = exception.error.toString()
       }
       is BridgefyException.SizeLimitExceededException -> {
         code = "sizeLimitExceeded"
@@ -231,6 +241,7 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
       }
       is BridgefyException.UnknownException -> {
         code = "unknownException"
+        message = exception.error.toString()
       }
     }
     return hashMapOf("code" to code, "message" to message, "details" to details);
@@ -265,6 +276,12 @@ class BridgefyPlugin: FlutterPlugin, MethodCallHandler, BridgefyDelegate {
       "mesh" -> TransmissionMode.Mesh(uuid)
       "broadcast" -> TransmissionMode.Broadcast(uuid)
       else -> null
+    }
+  }
+
+  private fun invokeDelegate(method: String, args: Any?) {
+    Handler(Looper.getMainLooper()).post {
+      channel.invokeMethod(method, args)
     }
   }
 }

@@ -135,6 +135,21 @@ enum BridgefyErrorType {
 
   /// (Android) Size limit exceeded
   sizeLimitExceeded,
+
+  /// (Android) Device capabilities error
+  deviceCapabilities,
+
+  /// (Android) Generic exception
+  genericException,
+
+  /// (Android) Inconsistent device time
+  inconsistentDeviceTimeException,
+
+  /// (Android) Internet connection required
+  internetConnectionRequiredException,
+
+  /// (Android) Unknown exception
+  unknownException,
 }
 
 class BridgefyError implements Exception {

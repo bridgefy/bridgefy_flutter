@@ -97,7 +97,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   BridgefyError? _bridgefyError(dynamic result) {
-    if (result["error"]) {
+    if (result["error"] != null) {
       return BridgefyError(
         type: BridgefyErrorType.values.byName(result["error"]["code"]),
         code: result["error"]["details"],
