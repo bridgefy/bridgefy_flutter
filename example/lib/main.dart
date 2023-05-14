@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
-  String _platformVersion = 'Unknown';
+  String apiKey = "<api_key>";
   final _bridgefy = Bridgefy();
   bool _didStart = false;
   String _buttonText = 'Start';
