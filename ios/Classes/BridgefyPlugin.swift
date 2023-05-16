@@ -191,7 +191,11 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func licenseExpirationDate(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(["licenseExpirationDate": bridgefy!.licenseExpirationDate?.timeIntervalSince1970])
+    if let interval = bridgefy!.licenseExpirationDate?.timeIntervalSince1970 {
+      result(["licenseExpirationDate": interval * 1000])
+    } else {
+      result(nil)
+    }
   }
 
   // MARK: Utils

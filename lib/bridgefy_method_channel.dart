@@ -65,7 +65,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<List<String>> get connectedPeers async {
     final result = await methodChannel.invokeMethod('connectedPeers');
-    return result["connectedPeers"] as List<String>;
+    return (result["connectedPeers"] as List).map((e) => e.toString()).toList();
   }
 
   @override
@@ -83,7 +83,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<DateTime?> get licenseExpirationDate async {
     final result = await methodChannel.invokeMethod('licenseExpirationDate');
     final interval = result["licenseExpirationDate"];
-    if (interval) {
+    if (interval != null) {
       return DateTime.fromMillisecondsSinceEpoch(interval);
     }
     return null;
