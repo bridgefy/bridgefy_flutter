@@ -1,7 +1,7 @@
 name: bridgefy
-description: A new Flutter plugin project.
+description: Bridgefy Flutter SDK
 version: 0.0.1
-homepage:
+homepage: https://bridgefy.me
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
