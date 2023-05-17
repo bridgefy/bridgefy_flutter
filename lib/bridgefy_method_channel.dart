@@ -27,7 +27,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
           "verboseLogging": verboseLogging,
         },
       );
-      _configureDelegate(delegate);
+      _delegate = delegate;
+      methodChannel.setMethodCallHandler(delegateCallHandler);
     } on PlatformException catch (e) {
       throw _bridgefyException(e);
     }
@@ -91,8 +92,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
 
   BridgefyTransmissionMode _transmissionMode(dynamic result) {
     return BridgefyTransmissionMode(
-      type: BridgefyTransmissionModeType.values.byName(result["mode"]),
-      uuid: result["uuid"],
+      type: BridgefyTransmissionModeType.values.byName(result["transmissionMode"]["mode"]),
+      uuid: result["transmissionMode"]["uuid"],
     );
   }
 
@@ -115,74 +116,71 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     );
   }
 
-  void _configureDelegate(BridgefyDelegate delegate) {
-    _delegate = delegate;
-    methodChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case "bridgefyDidStart":
-          _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
-          break;
-        case "bridgefyDidFailToStart":
-          _delegate?.bridgefyDidFailToStart(
-            error: _bridgefyError(call.arguments)!,
-          );
-          break;
-        case "bridgefyDidStop":
-          _delegate?.bridgefyDidStop();
-          break;
-        case "bridgefyDidFailToStop":
-          _delegate?.bridgefyDidFailToStop(
-            error: _bridgefyError(call.arguments)!,
-          );
-          break;
-        case "bridgefyDidDestroySession":
-          _delegate?.bridgefyDidDestroySession();
-          break;
-        case "bridgefyDidFailToDestroySession":
-          _delegate?.bridgefyDidFailToDestroySession();
-          break;
-        case "bridgefyDidConnect":
-          _delegate?.bridgefyDidConnect(userID: call.arguments['userId'] as String);
-          break;
-        case "bridgefyDidDisconnect":
-          _delegate?.bridgefyDidDisconnect(userID: call.arguments['userId'] as String);
-          break;
-        case "bridgefyDidEstablishSecureConnection":
-          _delegate?.bridgefyDidEstablishSecureConnection(
-              userID: call.arguments['userId'] as String);
-          break;
-        case "bridgefyDidFailToEstablishSecureConnection":
-          _delegate?.bridgefyDidFailToEstablishSecureConnection(
-            userID: call.arguments['userId'] as String,
-            error: _bridgefyError(call.arguments)!,
-          );
-          break;
-        case "bridgefyDidSendMessage":
-          _delegate?.bridgefyDidSendMessage(messageID: call.arguments['messageId'] as String);
-          break;
-        case "bridgefyDidFailSendingMessage":
-          _delegate?.bridgefyDidFailSendingMessage(
-            messageID: call.arguments['messageId'] as String,
-            error: _bridgefyError(call.arguments),
-          );
-          break;
-        case "bridgefyDidReceiveData":
-          _delegate?.bridgefyDidReceiveData(
-            data: call.arguments['data'] as Uint8List,
-            messageId: call.arguments['messageId'] as String,
-            transmissionMode: _transmissionMode(call.arguments),
-          );
-          break;
-        case "bridgefyDidSendDataProgress":
-          _delegate?.bridgefyDidSendDataProgress(
-            messageID: call.arguments['messageId'] as String,
-            position: call.arguments['position'] as int,
-            of: call.arguments['of'] as int,
-          );
-          break;
-        default:
-          break;
-      }
-    });
+  @visibleForTesting
+  Future<dynamic> delegateCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case "bridgefyDidStart":
+        _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
+        break;
+      case "bridgefyDidFailToStart":
+        _delegate?.bridgefyDidFailToStart(
+          error: _bridgefyError(call.arguments)!,
+        );
+        break;
+      case "bridgefyDidStop":
+        _delegate?.bridgefyDidStop();
+        break;
+      case "bridgefyDidFailToStop":
+        _delegate?.bridgefyDidFailToStop(
+          error: _bridgefyError(call.arguments)!,
+        );
+        break;
+      case "bridgefyDidDestroySession":
+        _delegate?.bridgefyDidDestroySession();
+        break;
+      case "bridgefyDidFailToDestroySession":
+        _delegate?.bridgefyDidFailToDestroySession();
+        break;
+      case "bridgefyDidConnect":
+        _delegate?.bridgefyDidConnect(userID: call.arguments['userId'] as String);
+        break;
+      case "bridgefyDidDisconnect":
+        _delegate?.bridgefyDidDisconnect(userID: call.arguments['userId'] as String);
+        break;
+      case "bridgefyDidEstablishSecureConnection":
+        _delegate?.bridgefyDidEstablishSecureConnection(userID: call.arguments['userId'] as String);
+        break;
+      case "bridgefyDidFailToEstablishSecureConnection":
+        _delegate?.bridgefyDidFailToEstablishSecureConnection(
+          userID: call.arguments['userId'] as String,
+          error: _bridgefyError(call.arguments)!,
+        );
+        break;
+      case "bridgefyDidSendMessage":
+        _delegate?.bridgefyDidSendMessage(messageID: call.arguments['messageId'] as String);
+        break;
+      case "bridgefyDidFailSendingMessage":
+        _delegate?.bridgefyDidFailSendingMessage(
+          messageID: call.arguments['messageId'] as String,
+          error: _bridgefyError(call.arguments),
+        );
+        break;
+      case "bridgefyDidReceiveData":
+        _delegate?.bridgefyDidReceiveData(
+          data: call.arguments['data'] as Uint8List,
+          messageId: call.arguments['messageId'] as String,
+          transmissionMode: _transmissionMode(call.arguments),
+        );
+        break;
+      case "bridgefyDidSendDataProgress":
+        _delegate?.bridgefyDidSendDataProgress(
+          messageID: call.arguments['messageId'] as String,
+          position: call.arguments['position'] as int,
+          of: call.arguments['of'] as int,
+        );
+        break;
+      default:
+        break;
+    }
   }
 }
