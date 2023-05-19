@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bridgefy/bridgefy.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,17 +15,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
-  String apiKey = "<api_key>";
+  String apiKey = "APIKEY";
   final _bridgefy = Bridgefy();
   bool _didStart = false;
   String _buttonText = 'Start';
-  String? _uuid;
-  String? _lastMessageId;
+  String _logStr = '';
 
   @override
   void initState() {
     super.initState();
-    _bridgefy.initialize(apiKey: apiKey, delegate: this);
+    Permission.locationAlways.request().then((value) async {
+      try {
+        await _bridgefy.initialize(
+          apiKey: apiKey,
+          propagationProfile: BridgefyPropagationProfile.longReach,
+          delegate: this,
+        );
+      } catch (e) {
+        _log("Unable to initialize: $e");
+      }
+    });
   }
 
   @override
@@ -32,17 +42,30 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Bridgefy'),
         ),
         body: Center(
-          child: Column(
-            children: [
-              ElevatedButton(onPressed: _toggleStart, child: Text(_buttonText)),
-              const SizedBox(height: 48),
-              ElevatedButton(onPressed: _send, child: const Text("Send")),
-              Text("UUID: $_uuid"),
-              Text("Last sent message ID: $_lastMessageId"),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(onPressed: _toggleStart, child: Text(_buttonText)),
+                    const SizedBox(width: 10),
+                    ElevatedButton(onPressed: _send, child: const Text("Send data")),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const Text("Log", style: TextStyle(fontWeight: FontWeight.bold)),
+                SingleChildScrollView(
+                  child: Text(_logStr),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -65,39 +88,37 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
         uuid: await _bridgefy.currentUserID,
       ),
     );
-    setState(() {
-      _lastMessageId = lastMessageId;
-    });
+    _log("Sent message with ID: $lastMessageId");
   }
 
   @override
   void bridgefyDidConnect({required String userID}) {
-    print("bridgefyDidConnect");
+    _log("bridgefyDidConnect");
   }
 
   @override
   void bridgefyDidDestroySession() {
-    print("bridgefyDidDestroySession");
+    _log("bridgefyDidDestroySession");
   }
 
   @override
   void bridgefyDidDisconnect({required String userID}) {
-    print("bridgefyDidDisconnect: $userID");
+    _log("bridgefyDidDisconnect: $userID");
   }
 
   @override
   void bridgefyDidEstablishSecureConnection({required String userID}) {
-    print("bridgefyDidEstablishSecureConnection: $userID");
+    _log("bridgefyDidEstablishSecureConnection: $userID");
   }
 
   @override
   void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error}) {
-    print("bridgefyDidFailSendingMessage: $messageID, $error");
+    _log("bridgefyDidFailSendingMessage: $messageID, $error");
   }
 
   @override
   void bridgefyDidFailToDestroySession() {
-    print("bridgefyDidFailToDestroySession");
+    _log("bridgefyDidFailToDestroySession");
   }
 
   @override
@@ -105,17 +126,17 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     required String userID,
     required BridgefyError error,
   }) {
-    print("bridgefyDidFailToEstablishSecureConnection: $userID, $error");
+    _log("bridgefyDidFailToEstablishSecureConnection: $userID, $error");
   }
 
   @override
   void bridgefyDidFailToStart({required BridgefyError error}) {
-    print("bridgefyDidFailToStart: $error");
+    _log("bridgefyDidFailToStart: $error");
   }
 
   @override
   void bridgefyDidFailToStop({required BridgefyError error}) {
-    print("bridgefyDidFailToStop: $error");
+    _log("bridgefyDidFailToStop: $error");
   }
 
   @override
@@ -124,31 +145,29 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     required String messageId,
     required BridgefyTransmissionMode transmissionMode,
   }) {
-    print("bridgefyDidReceiveData: $data, $messageId, $transmissionMode");
+    _log("bridgefyDidReceiveData: $data, $messageId, $transmissionMode");
   }
 
   @override
   void bridgefyDidSendMessage({required String messageID}) {
-    print("bridgefyDidSendMessage: $messageID");
+    _log("bridgefyDidSendMessage: $messageID");
   }
 
   @override
   void bridgefyDidStart({required String currentUserID}) {
-    print("bridgefyDidStart: $currentUserID");
+    _log("bridgefyDidStart: $currentUserID");
     setState(() {
       _didStart = true;
       _buttonText = 'Stop';
-      _uuid = currentUserID;
     });
   }
 
   @override
   void bridgefyDidStop() {
-    print("bridgefyDidStop");
+    _log("bridgefyDidStop");
     setState(() {
       _didStart = false;
       _buttonText = 'Start';
-      _uuid = null;
     });
   }
 
@@ -158,6 +177,12 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     required int position,
     required int of,
   }) {
-    print("bridgefyDidSendDataProgress: $messageID, $position, $of");
+    _log("bridgefyDidSendDataProgress: $messageID, $position, $of");
+  }
+
+  void _log(String text) {
+    setState(() {
+      _logStr += "$text\n";
+    });
   }
 }
