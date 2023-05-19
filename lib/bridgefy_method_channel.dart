@@ -10,6 +10,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('bridgefy');
   BridgefyDelegate? _delegate;
+  bool _initialized = false;
 
   @override
   Future<void> initialize({
@@ -29,6 +30,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
       );
       _delegate = delegate;
       methodChannel.setMethodCallHandler(delegateCallHandler);
+      _initialized = true;
     } on PlatformException catch (e) {
       throw _bridgefyException(e);
     }
@@ -36,6 +38,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
 
   @override
   Future<void> start() {
+    assert(_initialized, 'Bridgefy is not initialized');
     return methodChannel.invokeMethod('start');
   }
 
@@ -44,6 +47,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     required Uint8List data,
     required BridgefyTransmissionMode transmissionMode,
   }) async {
+    assert(_initialized, 'Bridgefy is not initialized');
     try {
       final result = await methodChannel.invokeMethod(
         'send',
@@ -60,28 +64,33 @@ class MethodChannelBridgefy extends BridgefyPlatform {
 
   @override
   Future<void> stop() {
+    assert(_initialized, 'Bridgefy is not initialized');
     return methodChannel.invokeMethod('stop');
   }
 
   @override
   Future<List<String>> get connectedPeers async {
+    assert(_initialized, 'Bridgefy is not initialized');
     final result = await methodChannel.invokeMethod('connectedPeers');
     return (result["connectedPeers"] as List).map((e) => e.toString()).toList();
   }
 
   @override
   Future<String> get currentUserID async {
+    assert(_initialized, 'Bridgefy is not initialized');
     final result = await methodChannel.invokeMethod('currentUserID');
     return result["userId"] as String;
   }
 
   @override
   Future<void> establishSecureConnection({required String userID}) {
+    assert(_initialized, 'Bridgefy is not initialized');
     return methodChannel.invokeMethod('establishSecureConnection', {"userId": userID});
   }
 
   @override
   Future<DateTime?> get licenseExpirationDate async {
+    assert(_initialized, 'Bridgefy is not initialized');
     final result = await methodChannel.invokeMethod('licenseExpirationDate');
     final interval = result["licenseExpirationDate"];
     if (interval != null) {

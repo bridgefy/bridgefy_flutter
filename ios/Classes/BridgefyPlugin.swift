@@ -350,7 +350,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   private func flutterError(from bridgefyError: BridgefyError) -> FlutterError {
     let dict = errorDictionary(from: bridgefyError)
     return FlutterError(
-      code: dict["type"] as! String,
+      code: dict["code"] as! String,
       message: dict["message"] as? String,
       details: dict["details"] as? Int
     )
