@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   bool _didStart = false;
   String _buttonText = 'Start';
   String _logStr = '';
+  final Color _bfColor = const Color(0x00FF4040);
 
   Future<void> checkPermissions() async {
     await [
@@ -49,6 +50,10 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: _bfColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: _bfColor),
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Bridgefy'),
