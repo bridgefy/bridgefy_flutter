@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.bridgefy.bridgefy_example">
    <application
-        android:label="bridgefy_example"
+        android:label="Bridgefy example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
