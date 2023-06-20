@@ -21,10 +21,19 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   String _buttonText = 'Start';
   String _logStr = '';
 
+  Future<void> checkPermissions() async {
+    await [
+      Permission.location,
+      Permission.bluetoothAdvertise,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan,
+    ].request();
+  }
+
   @override
   void initState() {
     super.initState();
-    Permission.locationAlways.request().then((value) async {
+    checkPermissions().then((value) async {
       try {
         await _bridgefy.initialize(
           apiKey: apiKey,
