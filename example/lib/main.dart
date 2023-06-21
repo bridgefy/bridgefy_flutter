@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
-  String apiKey = "APIKEY";
+  String apiKey = "YOUR_APIKEY";
   final _bridgefy = Bridgefy();
   bool _didStart = false;
   String _buttonText = 'Start';
@@ -75,8 +75,13 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                 ),
                 const SizedBox(height: 10),
                 const Text("Log", style: TextStyle(fontWeight: FontWeight.bold)),
-                SingleChildScrollView(
-                  child: Text(_logStr),
+                Expanded(
+                  child: SafeArea(
+                    bottom: true,
+                    child: SingleChildScrollView(
+                      child: Text(_logStr),
+                    ),
+                  ),
                 ),
               ],
             ),
