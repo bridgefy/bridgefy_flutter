@@ -15,16 +15,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
-  String apiKey = "APIKEY";
+  String apiKey = "YOUR_APIKEY";
   final _bridgefy = Bridgefy();
   bool _didStart = false;
   String _buttonText = 'Start';
   String _logStr = '';
+  final Color _bfColor = const Color(0x00FF4040);
+
+  Future<void> checkPermissions() async {
+    await [
+      Permission.location,
+      Permission.bluetoothAdvertise,
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan,
+    ].request();
+  }
 
   @override
   void initState() {
     super.initState();
-    Permission.locationAlways.request().then((value) async {
+    checkPermissions().then((value) async {
       try {
         await _bridgefy.initialize(
           apiKey: apiKey,
@@ -40,6 +50,10 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: _bfColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: _bfColor),
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Bridgefy'),
@@ -61,8 +75,13 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                 ),
                 const SizedBox(height: 10),
                 const Text("Log", style: TextStyle(fontWeight: FontWeight.bold)),
-                SingleChildScrollView(
-                  child: Text(_logStr),
+                Expanded(
+                  child: SafeArea(
+                    bottom: true,
+                    child: SingleChildScrollView(
+                      child: Text(_logStr),
+                    ),
+                  ),
                 ),
               ],
             ),

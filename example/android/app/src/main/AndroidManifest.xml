@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.bridgefy.bridgefy_example">
    <application
-        android:label="bridgefy_example"
+        android:label="Bridgefy example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -27,7 +27,7 @@
         </activity>
         <meta-data
             android:name="com.bridgefy.sdk.API_KEY"
-            android:value="API_KEY" />
+            android:value="YOUR_APIKEY" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
