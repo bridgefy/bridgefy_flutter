@@ -1,4 +1,4 @@
-package me.bridgefy.bridgefy
+package me.bridgefy.plugin.flutter
 
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +8,6 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 import me.bridgefy.Bridgefy
 import me.bridgefy.commons.TransmissionMode
 import me.bridgefy.commons.exception.BridgefyException
