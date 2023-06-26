@@ -1,6 +1,6 @@
 name: bridgefy
 description: Bridgefy Flutter SDK
-version: 0.0.1
+version: 1.0.0
 homepage: https://bridgefy.me
 
 environment:
@@ -21,7 +21,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: me.bridgefy.bridgefy
+        package: me.bridgefy.plugin.flutter
         pluginClass: BridgefyPlugin
       ios:
         pluginClass: BridgefyPlugin
