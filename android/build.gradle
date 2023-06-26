@@ -1,5 +1,5 @@
-group 'me.bridgefy.bridgefy'
-version '1.0-SNAPSHOT'
+group 'me.bridgefy.plugin.flutter'
+version '1.0.0'
 
 buildscript {
     ext.kotlin_version = '1.7.10'
@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -17,14 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         maven {
-            url "http://104.196.228.98:8081/artifactory/libs-snapshot-local"
-            credentials {
-                username "bridgefy-beta"
-                password "g\$thaP@ad8w=w=OT78_r"
-            }
-            authentication {
-                digest(BasicAuthentication)
-            }
+            url "http://104.196.228.98:8081/artifactory/libs-release-local"
             allowInsecureProtocol = true
         }
     }
@@ -62,9 +55,7 @@ android {
 }
 
 dependencies {
-    implementation (group: "me.bridgefy", name: "android-sdk", version: "0.4.1-SNAPSHOT", ext: "aar") {
-        transitive = true
-    }
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.0.0", ext: "aar")
 }
