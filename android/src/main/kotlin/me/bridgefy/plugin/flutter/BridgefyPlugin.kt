@@ -266,6 +266,9 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
             is BridgefyException.UnknownException -> {
                 code = "unknownException"
                 message = exception.error.toString()
+            } else -> {
+                code = "unknownException"
+                message = exception.toString()
             }
         }
         return hashMapOf("code" to code, "message" to message, "details" to details)
