@@ -296,6 +296,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                 "mode" to "p2p",
                 "uuid" to mode.receiver.toString(),
             )
+            else -> hashMapOf<String, String>()
         }
     }
 
