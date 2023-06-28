@@ -17,7 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         maven {
-            url "http://104.196.228.98:8081/artifactory/libs-release-local"
+            url "http://34.82.5.94:8081/artifactory/libs-release-local"
             allowInsecureProtocol = true
         }
     }
