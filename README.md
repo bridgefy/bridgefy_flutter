@@ -40,15 +40,17 @@ below:
 
 ## Installation
 
-Since this SDK is still in beta, you'll need to add a reference to this repository in your
-`pubspec.yaml` file:
+To install this SDK, you'll need to either add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  bridgefy:
-    git:
-      url: https://github.com/bridgefy/bridgefy_flutter.git
-      ref: main
+  bridgefy: ^1.0.1
+```
+
+Or run this flutter command:
+
+```bash
+flutter pub add bridgefy
 ```
 
 ## Usage
@@ -62,6 +64,8 @@ mixin.
 The following code shows how to start the SDK (using your API key) and how to assign the delegate.
 
 ```dart
+import 'package:bridgefy/bridgefy.dart';
+
 class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   final _bridgefy = Bridgefy();
 
