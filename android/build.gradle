@@ -1,0 +1,63 @@
+group 'me.bridgefy.plugin.flutter'
+version '1.0.0'
+
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        maven {
+            url "http://34.82.5.94:8081/artifactory/libs-release-local"
+            allowInsecureProtocol = true
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+}
+
+dependencies {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.0.1", ext: "aar") {
+        transitive = true
+    }
+    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+}
