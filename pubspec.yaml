@@ -8,8 +8,8 @@ topics:
   - network
   - offline
   - mesh
-  - BLE
-  - Bluetooth
+  - ble
+  - bluetooth
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
