@@ -7,7 +7,7 @@ issue_tracker: https://github.com/bridgefy/bridgefy_flutter/issues
 topics:
   - network
   - offline
-  - mesh network
+  - mesh
   - BLE
   - Bluetooth
 
