@@ -2,6 +2,18 @@ name: bridgefy
 description: Bridgefy Flutter SDK
 version: 1.0.1
 homepage: https://bridgefy.me
+repository: https://github.com/bridgefy/bridgefy_flutter
+issue_tracker: https://github.com/bridgefy/bridgefy_flutter/issues
+topics:
+  - network
+  - offline
+  - mesh
+  - messenger
+  - chat
+  - android
+  - ios
+  - kotlin
+  - swift
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
