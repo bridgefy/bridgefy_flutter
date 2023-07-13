@@ -7,13 +7,9 @@ issue_tracker: https://github.com/bridgefy/bridgefy_flutter/issues
 topics:
   - network
   - offline
-  - mesh
-  - messenger
-  - chat
-  - android
-  - ios
-  - kotlin
-  - swift
+  - mesh network
+  - BLE
+  - Bluetooth
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
