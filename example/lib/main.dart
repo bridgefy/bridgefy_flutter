@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bridgefy/bridgefy.dart';
@@ -21,6 +23,23 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   String _buttonText = 'Start';
   String _logStr = '';
   final Color _bfColor = const Color(0x00FF4040);
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() { 
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  _goToEnd(){
+    Timer(const Duration(milliseconds:300), (){
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent, 
+        duration: const Duration(milliseconds:200), 
+        curve: Curves.linear,
+      );
+    });
+  }
 
   Future<void> checkPermissions() async {
     await [
@@ -75,10 +94,12 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                 ),
                 const SizedBox(height: 10),
                 const Text("Log", style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
                 Expanded(
                   child: SafeArea(
                     bottom: true,
                     child: SingleChildScrollView(
+                      controller: _scrollController,
                       child: Text(_logStr),
                     ),
                   ),
@@ -108,6 +129,7 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
       ),
     );
     _log("Sent message with ID: $lastMessageId");
+    _goToEnd();
   }
 
   @override
