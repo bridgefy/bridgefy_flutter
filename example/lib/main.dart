@@ -68,6 +68,11 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+    ]);
+
     return MaterialApp(
       theme: ThemeData(
         primaryColor: _bfColor,
