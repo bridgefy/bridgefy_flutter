@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:bridgefy/bridgefy.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -92,7 +94,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<DateTime?> get licenseExpirationDate async {
     assert(_initialized, 'Bridgefy is not initialized');
     final result = await methodChannel.invokeMethod('licenseExpirationDate');
-    final interval = result["licenseExpirationDate"];
+    final interval = result["licenseExpirationDate"].toInt();
     if (interval != null) {
       return DateTime.fromMillisecondsSinceEpoch(interval);
     }

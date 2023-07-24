@@ -186,7 +186,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun connectedPeers(@NonNull call: MethodCall, @NonNull result: Result) {
-        result.success(arrayOf<String>())
+        result.success(hashMapOf("connectedPeers" to listOf<String>()))
         TODO("Android impl")
     }
 
