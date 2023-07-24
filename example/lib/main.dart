@@ -94,7 +94,10 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                   children: [
                     ElevatedButton(onPressed: _toggleStart, child: Text(_buttonText)),
                     const SizedBox(width: 10),
-                    ElevatedButton(onPressed: _send, child: const Text("Send data")),
+                    ElevatedButton(
+                      onPressed: _didStart ? _send : null,
+                      child: const Text("Send data")
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
