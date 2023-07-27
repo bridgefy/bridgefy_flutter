@@ -55,7 +55,7 @@ android {
 }
 
 dependencies {
-    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.0.1", ext: "aar") {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.0.2", ext: "aar") {
         transitive = true
     }
     implementation "androidx.preference:preference-ktx:1.2.0"

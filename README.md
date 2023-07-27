@@ -44,7 +44,7 @@ To install this SDK, you'll need to either add the following to your `pubspec.ya
 
 ```yaml
 dependencies:
-  bridgefy: ^1.0.3
+  bridgefy: ^1.0.4
 ```
 
 Or run this flutter command:
@@ -136,4 +136,4 @@ Bridgefy's SDKs are designed to work seamlessly across different platforms, incl
 ## Contact & Support
 + contact@bridgefy.me
 
-© 2023 Bridgefy Inc. All rights reserved
+© 2023 Bridgefy Inc. All rights reserved 
