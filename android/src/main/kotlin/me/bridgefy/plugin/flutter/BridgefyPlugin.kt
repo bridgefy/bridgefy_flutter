@@ -41,6 +41,8 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
             "currentUserID" -> currentUserID(call, result)
             "establishSecureConnection" -> establishSecureConnection(call, result)
             "licenseExpirationDate" -> licenseExpirationDate(call, result)
+            "destroySession" -> destroySession(call, result)
+            "updateLicense" -> updateLicense(call, result)
             else -> result.notImplemented()
         }
     }
@@ -205,6 +207,16 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     private fun licenseExpirationDate(@NonNull call: MethodCall, @NonNull result: Result) {
         val date = bridgefy.licenseExpirationDate()
         result.success(hashMapOf("licenseExpirationDate" to date?.time))
+    }
+
+    private fun destroySession(@NonNull call: MethodCall, @NonNull result: Result) {
+        bridgefy.destroySession()
+        result.success(null)
+    }
+
+    private fun updateLicense(@NonNull call: MethodCall, @NonNull result: Result) {
+        bridgefy.updateLicense()
+        result.success(null)
     }
 
     private fun mapFromBridgefyException(exception: BridgefyException): HashMap<String, Any?> {
