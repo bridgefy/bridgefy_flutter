@@ -137,7 +137,6 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
       ),
     );
     _log("Sent message with ID: $lastMessageId");
-    _goToEnd();
   }
 
   @override
@@ -230,6 +229,7 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   }
 
   void _log(String text) {
+    _goToEnd();
     setState(() {
       _logStr += "$text\n";
     });
