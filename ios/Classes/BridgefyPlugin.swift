@@ -42,6 +42,12 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     case "licenseExpirationDate":
       licenseExpirationDate(call, result: result)
       break
+    case "destroySession":
+      destroySession(call, result: result)
+      break
+    case "updateLicense":
+      updateLicense(call, result: result)
+      break
     default:
       result(FlutterMethodNotImplemented)
       break
@@ -196,6 +202,16 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     } else {
       result(nil)
     }
+  }
+
+  private func destroySession(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    bridgefy!.destroySession()
+    result(nil)
+  }
+
+  private func updateLicense(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    bridgefy!.updateLicense()
+    result(nil)
   }
 
   // MARK: Utils

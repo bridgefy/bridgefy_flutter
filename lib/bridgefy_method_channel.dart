@@ -101,6 +101,18 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     return null;
   }
 
+  @override
+  Future<void> destroySession() {
+    assert(_initialized, 'Bridgefy is not initialized');
+    return methodChannel.invokeMethod('destroySession');
+  }
+
+  @override
+  Future<void> updateLicense() {
+    assert(_initialized, 'Bridgefy is not initialized');
+    return methodChannel.invokeMethod('updateLicense');
+  }
+
   BridgefyTransmissionMode _transmissionMode(dynamic result) {
     return BridgefyTransmissionMode(
       type: BridgefyTransmissionModeType.values.byName(result["transmissionMode"]["mode"]),
