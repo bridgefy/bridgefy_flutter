@@ -1,6 +1,6 @@
 name: bridgefy
 description: The Bridgefy SDK is a state-of-the-art, plug-and-play package that lets people use apps when they don’t have access to the Internet by using mesh networ
-version: 1.0.4
+version: 1.0.5
 homepage: https://bridgefy.me/sdk
 repository: https://github.com/bridgefy/bridgefy_flutter
 issue_tracker: https://github.com/bridgefy/bridgefy_flutter/issues
