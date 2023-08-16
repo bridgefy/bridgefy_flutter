@@ -92,16 +92,29 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: _toggleStart, child: Text(_buttonText)),
-                    const SizedBox(width: 10),
-                    ElevatedButton(
+                    ElevatedButton.icon(
+                      icon: _didStart ? 
+                        const Icon(Icons.stop_circle) : 
+                        const Icon(Icons.check_circle),
+                      onPressed: _toggleStart,
+                      label: Text(_buttonText)
+                    ),
+                    const SizedBox(width: 7),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.send),
                       onPressed: _didStart ? _send : null,
-                      child: const Text("Send data")
+                      label: const Text("Send")
+                    ),
+                    const SizedBox(width: 7),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.delete_forever),
+                      onPressed: _logStr!='' ? _clearLogs : null,
+                      label: const Text("Logs")
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text("Log", style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text("Logs", style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 Expanded(
                   child: SafeArea(
@@ -118,6 +131,12 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
         ),
       ),
     );
+  }
+
+  void _clearLogs() {
+    setState(() {
+      _logStr = "";
+    });
   }
 
   void _toggleStart() {
@@ -141,7 +160,7 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
 
   @override
   void bridgefyDidConnect({required String userID}) {
-    _log("bridgefyDidConnect");
+    _log("bridgefyDidConnect: $userID");
   }
 
   @override
