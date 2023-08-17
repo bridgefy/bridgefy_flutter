@@ -39,9 +39,18 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   @override
-  Future<void> start() {
+  Future<void> start({
+    String? userId,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+  }) {
     assert(_initialized, 'Bridgefy is not initialized');
-    return methodChannel.invokeMethod('start');
+    return methodChannel.invokeMethod(
+      'start',
+      {
+        "userId": userId,
+        "propagationProfile": propagationProfile.name,
+      }
+    );
   }
 
   @override
