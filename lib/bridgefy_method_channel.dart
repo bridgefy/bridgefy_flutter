@@ -18,7 +18,6 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<void> initialize({
     required String apiKey,
     required BridgefyDelegate delegate,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) async {
     try {
@@ -26,7 +25,6 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         'initialize',
         {
           "apiKey": apiKey,
-          "propagationProfile": propagationProfile.name,
           "verboseLogging": verboseLogging,
         },
       );

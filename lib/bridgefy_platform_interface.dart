@@ -29,7 +29,6 @@ abstract class BridgefyPlatform extends PlatformInterface {
   Future<void> initialize({
     required String apiKey,
     required BridgefyDelegate delegate,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) {
     throw UnimplementedError('initialize() has not been implemented.');

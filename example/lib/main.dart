@@ -57,8 +57,8 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
       try {
         await _bridgefy.initialize(
           apiKey: apiKey,
-          propagationProfile: BridgefyPropagationProfile.longReach,
           delegate: this,
+          verboseLogging: true,
         );
       } catch (e) {
         _log("Unable to initialize: $e");
