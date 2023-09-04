@@ -2,6 +2,7 @@ package me.bridgefy.plugin.flutter
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -54,13 +55,10 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     private fun initialize(@NonNull call: MethodCall, @NonNull result: Result) {
         val args = call.arguments as HashMap<String, Any>
         val apiKey = args["apiKey"] as String
-        val profileStr = args["propagationProfile"] as String
-        val propagationProfile = propagationProfileFromString(profileStr)
+        val verboseLogging = args["verboseLogging"] as Boolean
         try {
             bridgefy.init(
-                null,
                 UUID.fromString(apiKey),
-                propagationProfile!!,
                 object : BridgefyDelegate {
                     override fun onConnected(userID: UUID) {
                         invokeDelegate(
@@ -75,7 +73,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                         }
                     }
 
-                    override fun onConnectedSecurely(userID: UUID) {
+                    override fun onEstablishSecureConnection(userID: UUID) {
                         invokeDelegate(
                             "bridgefyDidEstablishSecureConnection",
                             hashMapOf("userId" to userID.toString()),
@@ -90,10 +88,10 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                     }
 
                     // TODO: iOS provides BridgefyError
-                    override fun onFailToSend(messageID: UUID) {
+                    override fun onFailToSend(messageID: UUID, error: BridgefyException) {
                         invokeDelegate(
                             "bridgefyDidFailSendingMessage",
-                            hashMapOf("messageId" to messageID.toString(), "error" to null),
+                            hashMapOf("messageId" to messageID.toString(), "error" to mapFromBridgefyException(error)),
                         )
                     }
 
@@ -118,7 +116,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                         )
                     }
 
-                    override fun onReceive(
+                    override fun onReceiveData(
                         data: ByteArray,
                         messageID: UUID,
                         transmissionMode: TransmissionMode,
@@ -147,14 +145,32 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                         )
                     }
 
-                    // TODO: bridgefyDidFailToEstablishSecureConnection
-                    // TODO: bridgefyDidDestroySession
-                    // TODO: bridgefyDidFailToDestroySession
+                    override fun onFailToEstablishSecureConnection(userId: UUID, error: BridgefyException) {
+                        invokeDelegate(
+                            "bridgefyDidFailToEstablishSecureConnection",
+                            hashMapOf("userId" to userId.toString(), "error" to mapFromBridgefyException(error)),
+                        )
+                    }
+
+                    override fun onDestroySession() {
+                        invokeDelegate(
+                            "bridgefyDidDestroySession",
+                            hashMapOf("error" to null),
+                        )
+                    }
+
+                    override fun onFailToDestroySession(error: BridgefyException) {
+                        invokeDelegate(
+                            "bridgefyDidFailToDestroySession",
+                            hashMapOf("error" to mapFromBridgefyException(error)),
+                        )
+                    }
 
                     override fun onStopped() {
                         invokeDelegate("bridgefyDidStop", null)
                     }
                 },
+                if (verboseLogging) Log.DEBUG else 1,
             )
             result.success(null)
         } catch (error: BridgefyException) {
@@ -188,12 +204,13 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun connectedPeers(@NonNull call: MethodCall, @NonNull result: Result) {
-        result.success(hashMapOf("connectedPeers" to listOf<String>()))
-        TODO("Android impl")
+        val peersUUID = bridgefy.connectedPeers().getOrNull()
+        val peers = peersUUID?.map { it.toString() }
+        result.success(hashMapOf("connectedPeers" to peers))
     }
 
     private fun currentUserID(@NonNull call: MethodCall, @NonNull result: Result) {
-        val userId = bridgefy.currentBridgefyUser()
+        val userId = bridgefy.currentUserId().getOrThrow()
         result.success(hashMapOf("userId" to userId.toString()))
     }
 
@@ -205,7 +222,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun licenseExpirationDate(@NonNull call: MethodCall, @NonNull result: Result) {
-        val date = bridgefy.licenseExpirationDate()
+        val date = bridgefy.licenseExpirationDate().getOrThrow()
         result.success(hashMapOf("licenseExpirationDate" to date?.time))
     }
 

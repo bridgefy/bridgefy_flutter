@@ -247,12 +247,10 @@ class Bridgefy {
   Future<void> initialize({
     required String apiKey,
     required BridgefyDelegate delegate,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) async {
     await BridgefyPlatform.instance.initialize(
       apiKey: apiKey,
-      propagationProfile: propagationProfile,
       delegate: delegate,
       verboseLogging: verboseLogging,
     );

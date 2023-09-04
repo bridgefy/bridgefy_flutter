@@ -81,9 +81,9 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
                          arguments: nil)
   }
 
-  public func bridgefyDidFailToDestroySession() {
+  public func bridgefyDidFailToDestroySession(with error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToDestroySession",
-                         arguments: nil)
+                         arguments: ["error": errorDictionary(from: error)])
   }
 
   public func bridgefyDidConnect(with userId: UUID) {
@@ -140,12 +140,9 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   private func initialize(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     let args = call.arguments as! Dictionary<String, Any>
     let apiKey = args["apiKey"] as! String
-    let profileStr = args["propagationProfile"] as! String
-    let propagationProfile = propagationProfile(from: profileStr)!
     let verboseLogging = args["verboseLogging"] as! Bool
     do {
       bridgefy = try Bridgefy(withApiKey: apiKey,
-                              propagationProfile: propagationProfile,
                               delegate: self,
                               verboseLogging: verboseLogging)
       result(nil)
@@ -155,7 +152,17 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func start(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    bridgefy!.start()
+    let args = call.arguments as! Dictionary<String, Any>
+    let userId = args["userId"] as? String
+    let profileStr = args["propagationProfile"] as! String
+    let propagationProfile = propagationProfile(from: profileStr)!
+    if let userId = userId {
+        let uuid = UUID(uuidString: userId)!
+        bridgefy?.start(withUserId: uuid, andPropagationProfile: propagationProfile)
+    }else{
+        bridgefy?.start(withUserId: nil,
+                      andPropagationProfile: propagationProfile)
+    }
     result(nil)
   }
 
@@ -178,13 +185,13 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(["connectedPeers": bridgefy!.connectedPeers.map({ uuid in
+    result(["connectedPeers": bridgefy!.connectedPeers!.map({ uuid in
       uuid.uuidString
     })])
   }
 
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(["userId": bridgefy!.currentUserId.uuidString])
+    result(["userId": bridgefy!.currentUserId!.uuidString])
   }
 
   private func establishSecureConnection(_ call: FlutterMethodCall,
@@ -210,7 +217,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func updateLicense(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    bridgefy!.updateLicense()
+    //bridgefy!.updateLicense()
     result(nil)
   }
 
@@ -294,7 +301,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     case .missingBundleID:
       type = "missingBundleID"
       break;
-    case .invalidAPIKey:
+    case .invalidApiKey:
       type = "invalidAPIKey"
       break;
     case .internetConnectionRequired:

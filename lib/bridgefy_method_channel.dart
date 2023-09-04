@@ -18,7 +18,6 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<void> initialize({
     required String apiKey,
     required BridgefyDelegate delegate,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) async {
     try {
@@ -26,7 +25,6 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         'initialize',
         {
           "apiKey": apiKey,
-          "propagationProfile": propagationProfile.name,
           "verboseLogging": verboseLogging,
         },
       );
@@ -39,9 +37,18 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   }
 
   @override
-  Future<void> start() {
+  Future<void> start({
+    String? userId,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+  }) {
     assert(_initialized, 'Bridgefy is not initialized');
-    return methodChannel.invokeMethod('start');
+    return methodChannel.invokeMethod(
+      'start',
+      {
+        "userId": userId,
+        "propagationProfile": propagationProfile.name,
+      }
+    );
   }
 
   @override
