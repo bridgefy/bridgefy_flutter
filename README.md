@@ -140,9 +140,6 @@ void bridgefyDidReceiveData({
 }
 ```
 
-To see a full list of events, take a look at the `BridgefyDelegate` mixin.
-
-
 ### Nearby peer detection
 
 The following method is invoked when a peer has established connection:
@@ -150,7 +147,7 @@ The following method is invoked when a peer has established connection:
 ```dart
     @override
     void bridgefyDidConnect({required String userID}) {
-      _log("bridgefyDidConnect: $userID");
+      // your implementation here.
     }
 ```
 
@@ -161,12 +158,14 @@ When a peer is disconnected(out of range), the following method will be invoked:
 ```dart
     @override
     void bridgefyDidDisconnect({required String userID}) {
-      _log("bridgefyDidDisconnect: $userID");
+      // your implementation here.
     }
 ```
 
 **userID:** Identifier of the disconnected user.
 
+
+To see a full list of events, take a look at the `BridgefyDelegate` mixin.
 
 ## Multi-Platform Support
 
