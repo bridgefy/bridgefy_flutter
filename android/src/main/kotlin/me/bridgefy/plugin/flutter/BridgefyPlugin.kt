@@ -180,7 +180,13 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun start(@NonNull call: MethodCall, @NonNull result: Result) {
-        bridgefy.start()
+        val args = call.arguments as HashMap<String, Any>
+        val userId: String? = args["userId"] as String?
+        val propagationProfile = propagationProfileFromString(args["propagationProfile"] as String)
+        bridgefy.start(
+            userId,
+            propagationProfile
+        )
         result.success(null)
     }
 
