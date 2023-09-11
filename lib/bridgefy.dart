@@ -257,8 +257,16 @@ class Bridgefy {
   }
 
   /// Start Bridgefy SDK operations
-  Future<void> start() {
-    return BridgefyPlatform.instance.start();
+  /// - Parameters:
+  ///   -
+  Future<void> start({
+    String? userId,
+    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+  }) async {
+    return BridgefyPlatform.instance.start(
+        userId: userId,
+        propagationProfile: propagationProfile
+    );
   }
 
   /// Stop Bridgefy SDK operations
