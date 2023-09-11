@@ -26,7 +26,8 @@ class TestDelegate implements BridgefyDelegate {
   }
 
   @override
-  void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error}) {
+  void bridgefyDidFailSendingMessage(
+      {required String messageID, BridgefyError? error}) {
     result = {"messageID": messageID, "error": error};
   }
 
@@ -59,7 +60,11 @@ class TestDelegate implements BridgefyDelegate {
     required String messageId,
     required BridgefyTransmissionMode transmissionMode,
   }) {
-    result = {"data": data, "messageId": messageId, "transmissionMode": transmissionMode};
+    result = {
+      "data": data,
+      "messageId": messageId,
+      "transmissionMode": transmissionMode
+    };
   }
 
   @override

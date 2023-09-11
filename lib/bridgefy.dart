@@ -214,7 +214,8 @@ mixin BridgefyDelegate {
   /// - Parameters:
   ///   - messageId: The id of the message that was tried to be sent
   ///   - error: Error reason.
-  void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error});
+  void bridgefyDidFailSendingMessage(
+      {required String messageID, BridgefyError? error});
 
   /// This function is called when a new message is received
   /// - Parameters:
@@ -257,8 +258,16 @@ class Bridgefy {
   }
 
   /// Start Bridgefy SDK operations
-  Future<void> start() {
-    return BridgefyPlatform.instance.start();
+  /// - Parameters:
+  ///   - userId: set custom user Id
+  ///   - propagationProfile: start with propagation profile
+  Future<void> start({
+    String? userId,
+    BridgefyPropagationProfile propagationProfile =
+        BridgefyPropagationProfile.standard,
+  }) async {
+    return BridgefyPlatform.instance
+        .start(userId: userId, propagationProfile: propagationProfile);
   }
 
   /// Stop Bridgefy SDK operations

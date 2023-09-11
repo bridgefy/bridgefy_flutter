@@ -44,7 +44,7 @@ To install this SDK, you'll need to either add the following to your `pubspec.ya
 
 ```yaml
 dependencies:
-  bridgefy: ^1.1.0
+  bridgefy: ^1.1.1
 ```
 
 Or run this flutter command:
@@ -57,11 +57,11 @@ flutter pub add bridgefy
 
 ### Initialization
 
-The init method initializes the Bridgefy SDK with the given API key and propagation profile. The
+The init method initializes the Bridgefy SDK with the given API key and verbose logging. The
 delegate parameter is required and should be an object that conforms to the `BridgefyDelegate`
 mixin.
 
-The following code shows how to start the SDK (using your API key) and how to assign the delegate.
+The following code shows how to init the SDK (using your API key) and how to assign the delegate.
 
 ```dart
 import 'package:bridgefy/bridgefy.dart';
@@ -72,13 +72,29 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   @override
   void initState() {
     super.initState();
-    _bridgefy.initialize(
-      apiKey: "<API_KEY>",
-      propagationProfile: BridgefyPropagationProfile.longReach,
-      delegate: this
-    );
+    try {
+      await _bridgefy.initialize(
+        apiKey: "<API_KEY>",
+        delegate: this,
+        verboseLogging: true,
+      );
+    } catch (e) {
+      _log("Unable to initialize: $e");
+    }
   }
 ```
+### Start Bridgefy
+
+The following code shows how to start the SDK with propagation profile and custom user Id.
+
+````dart
+
+    _bridgefy.start(
+      userId: "Custom UUID",
+      propagationProfile: BridgefyPropagationProfile.standard
+    );
+
+````
 
 ### Sending data
 
@@ -122,6 +138,26 @@ void bridgefyDidReceiveData({
 }) {
   // `data` contains the message bytes.
 }
+```
+
+### Nearby peer detection
+
+The following method is invoked when a peer has established connection:
+
+```dart
+    @override
+    void bridgefyDidConnect({required String userID}) {
+      // `userID` the peer connected
+    }
+```
+
+When a peer is disconnected(out of range), the following method will be invoked:
+
+```dart
+    @override
+    void bridgefyDidDisconnect({required String userID}) {
+      // `userID` the peer disconnected
+    }
 ```
 
 To see a full list of events, take a look at the `BridgefyDelegate` mixin.

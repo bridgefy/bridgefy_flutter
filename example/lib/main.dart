@@ -26,16 +26,16 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   final _scrollController = ScrollController();
 
   @override
-  void dispose() { 
+  void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
 
-  _goToEnd(){
-    Timer(const Duration(milliseconds:300), (){
+  _goToEnd() {
+    Timer(const Duration(milliseconds: 300), () {
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent, 
-        duration: const Duration(milliseconds:200), 
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 200),
         curve: Curves.linear,
       );
     });
@@ -68,10 +68,8 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown
-    ]);
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
     return MaterialApp(
       theme: ThemeData(
@@ -93,28 +91,26 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
-                      icon: _didStart ? 
-                        const Icon(Icons.stop_circle) : 
-                        const Icon(Icons.check_circle),
-                      onPressed: _toggleStart,
-                      label: Text(_buttonText)
-                    ),
+                        icon: _didStart
+                            ? const Icon(Icons.stop_circle)
+                            : const Icon(Icons.check_circle),
+                        onPressed: _toggleStart,
+                        label: Text(_buttonText)),
                     const SizedBox(width: 7),
                     ElevatedButton.icon(
-                      icon: const Icon(Icons.send),
-                      onPressed: _didStart ? _send : null,
-                      label: const Text("Send")
-                    ),
+                        icon: const Icon(Icons.send),
+                        onPressed: _didStart ? _send : null,
+                        label: const Text("Send")),
                     const SizedBox(width: 7),
                     ElevatedButton.icon(
-                      icon: const Icon(Icons.delete_forever),
-                      onPressed: _logStr!='' ? _clearLogs : null,
-                      label: const Text("Logs")
-                    ),
+                        icon: const Icon(Icons.delete_forever),
+                        onPressed: _logStr != '' ? _clearLogs : null,
+                        label: const Text("Logs")),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text("Logs", style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text("Logs",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 Expanded(
                   child: SafeArea(
@@ -179,7 +175,8 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   }
 
   @override
-  void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error}) {
+  void bridgefyDidFailSendingMessage(
+      {required String messageID, BridgefyError? error}) {
     _log("bridgefyDidFailSendingMessage: $messageID, $error");
   }
 

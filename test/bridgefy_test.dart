@@ -6,13 +6,18 @@ import 'package:bridgefy/bridgefy_platform_interface.dart';
 import 'package:bridgefy/bridgefy_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockBridgefyPlatform with MockPlatformInterfaceMixin implements BridgefyPlatform {
+class MockBridgefyPlatform
+    with MockPlatformInterfaceMixin
+    implements BridgefyPlatform {
   @override
-  Future<List<String>> get connectedPeers => Future.value(
-      ["92cb1869-c31f-43e3-bca3-1bc627e99a6e", "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"]);
+  Future<List<String>> get connectedPeers => Future.value([
+        "92cb1869-c31f-43e3-bca3-1bc627e99a6e",
+        "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"
+      ]);
 
   @override
-  Future<String> get currentUserID => Future.value("92cb1869-c31f-43e3-bca3-1bc627e99a6e");
+  Future<String> get currentUserID =>
+      Future.value("92cb1869-c31f-43e3-bca3-1bc627e99a6e");
 
   @override
   Future<void> destroySession() {
@@ -28,7 +33,8 @@ class MockBridgefyPlatform with MockPlatformInterfaceMixin implements BridgefyPl
   Future<void> initialize({
     required String apiKey,
     required BridgefyDelegate delegate,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    BridgefyPropagationProfile propagationProfile =
+        BridgefyPropagationProfile.standard,
     bool verboseLogging = false,
   }) {
     throw UnimplementedError();
@@ -76,7 +82,10 @@ void main() {
 
     expect(
       await bridgefyPlugin.connectedPeers,
-      ["92cb1869-c31f-43e3-bca3-1bc627e99a6e", "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"],
+      [
+        "92cb1869-c31f-43e3-bca3-1bc627e99a6e",
+        "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"
+      ],
     );
   });
 
@@ -85,7 +94,8 @@ void main() {
     MockBridgefyPlatform fakePlatform = MockBridgefyPlatform();
     BridgefyPlatform.instance = fakePlatform;
 
-    expect(await bridgefyPlugin.currentUserID, "92cb1869-c31f-43e3-bca3-1bc627e99a6e");
+    expect(await bridgefyPlugin.currentUserID,
+        "92cb1869-c31f-43e3-bca3-1bc627e99a6e");
   });
 
   test('licenseExpirationDate', () async {

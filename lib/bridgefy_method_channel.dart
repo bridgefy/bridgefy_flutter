@@ -39,16 +39,14 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<void> start({
     String? userId,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    BridgefyPropagationProfile propagationProfile =
+        BridgefyPropagationProfile.standard,
   }) {
     assert(_initialized, 'Bridgefy is not initialized');
-    return methodChannel.invokeMethod(
-      'start',
-      {
-        "userId": userId,
-        "propagationProfile": propagationProfile.name,
-      }
-    );
+    return methodChannel.invokeMethod('start', {
+      "userId": userId,
+      "propagationProfile": propagationProfile.name,
+    });
   }
 
   @override
@@ -62,7 +60,10 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         'send',
         {
           "data": data,
-          "transmissionMode": {"mode": transmissionMode.type.name, "uuid": transmissionMode.uuid},
+          "transmissionMode": {
+            "mode": transmissionMode.type.name,
+            "uuid": transmissionMode.uuid
+          },
         },
       );
       return result["messageId"] as String;
@@ -94,7 +95,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<void> establishSecureConnection({required String userID}) {
     assert(_initialized, 'Bridgefy is not initialized');
-    return methodChannel.invokeMethod('establishSecureConnection', {"userId": userID});
+    return methodChannel
+        .invokeMethod('establishSecureConnection', {"userId": userID});
   }
 
   @override
@@ -122,7 +124,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
 
   BridgefyTransmissionMode _transmissionMode(dynamic result) {
     return BridgefyTransmissionMode(
-      type: BridgefyTransmissionModeType.values.byName(result["transmissionMode"]["mode"]),
+      type: BridgefyTransmissionModeType.values
+          .byName(result["transmissionMode"]["mode"]),
       uuid: result["transmissionMode"]["uuid"],
     );
   }
@@ -150,7 +153,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<dynamic> delegateCallHandler(MethodCall call) async {
     switch (call.method) {
       case "bridgefyDidStart":
-        _delegate?.bridgefyDidStart(currentUserID: call.arguments['userId'] as String);
+        _delegate?.bridgefyDidStart(
+            currentUserID: call.arguments['userId'] as String);
         break;
       case "bridgefyDidFailToStart":
         _delegate?.bridgefyDidFailToStart(
@@ -172,13 +176,16 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         _delegate?.bridgefyDidFailToDestroySession();
         break;
       case "bridgefyDidConnect":
-        _delegate?.bridgefyDidConnect(userID: call.arguments['userId'] as String);
+        _delegate?.bridgefyDidConnect(
+            userID: call.arguments['userId'] as String);
         break;
       case "bridgefyDidDisconnect":
-        _delegate?.bridgefyDidDisconnect(userID: call.arguments['userId'] as String);
+        _delegate?.bridgefyDidDisconnect(
+            userID: call.arguments['userId'] as String);
         break;
       case "bridgefyDidEstablishSecureConnection":
-        _delegate?.bridgefyDidEstablishSecureConnection(userID: call.arguments['userId'] as String);
+        _delegate?.bridgefyDidEstablishSecureConnection(
+            userID: call.arguments['userId'] as String);
         break;
       case "bridgefyDidFailToEstablishSecureConnection":
         _delegate?.bridgefyDidFailToEstablishSecureConnection(
@@ -187,7 +194,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         );
         break;
       case "bridgefyDidSendMessage":
-        _delegate?.bridgefyDidSendMessage(messageID: call.arguments['messageId'] as String);
+        _delegate?.bridgefyDidSendMessage(
+            messageID: call.arguments['messageId'] as String);
         break;
       case "bridgefyDidFailSendingMessage":
         _delegate?.bridgefyDidFailSendingMessage(

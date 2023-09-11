@@ -1,4 +1,4 @@
-# Bridgefy Flutter 1.1.0
+# Bridgefy Flutter 1.1.1
 ### BLUETOOTH MESH NETWORKS
 
 Devices running your app create Bluetooth Low-Energy mesh networks, which work in large crowds, during and after natural disasters, and whenever else your users lose access to the Internet.
