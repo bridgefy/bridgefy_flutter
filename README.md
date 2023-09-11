@@ -44,7 +44,7 @@ To install this SDK, you'll need to either add the following to your `pubspec.ya
 
 ```yaml
 dependencies:
-  bridgefy: ^1.1.0
+  bridgefy: ^1.1.1
 ```
 
 Or run this flutter command:
@@ -151,8 +151,6 @@ The following method is invoked when a peer has established connection:
     }
 ```
 
-**userID:** Identifier of the user that has established a connection.
-
 When a peer is disconnected(out of range), the following method will be invoked:
 
 ```dart
@@ -161,9 +159,6 @@ When a peer is disconnected(out of range), the following method will be invoked:
       // `userID` the peer disconnected
     }
 ```
-
-**userID:** Identifier of the disconnected user.
-
 
 To see a full list of events, take a look at the `BridgefyDelegate` mixin.
 
