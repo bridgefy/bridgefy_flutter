@@ -147,7 +147,7 @@ The following method is invoked when a peer has established connection:
 ```dart
     @override
     void bridgefyDidConnect({required String userID}) {
-      // your implementation here.
+      // `userID` the peer connected
     }
 ```
 
@@ -158,7 +158,7 @@ When a peer is disconnected(out of range), the following method will be invoked:
 ```dart
     @override
     void bridgefyDidDisconnect({required String userID}) {
-      // your implementation here.
+      // `userID` the peer disconnected
     }
 ```
 
