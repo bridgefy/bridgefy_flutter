@@ -50,7 +50,10 @@ void main() {
   test('connectedPeers', () async {
     expect(
       await platform.connectedPeers,
-      ["92cb1869-c31f-43e3-bca3-1bc627e99a6e", "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"],
+      [
+        "92cb1869-c31f-43e3-bca3-1bc627e99a6e",
+        "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"
+      ],
     );
   });
 
@@ -72,7 +75,8 @@ void main() {
     final delegate = TestDelegate();
     await platform.initialize(apiKey: "test", delegate: delegate);
     platform.delegateCallHandler(
-      const MethodCall('bridgefyDidStart', {"userId": "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"}),
+      const MethodCall('bridgefyDidStart',
+          {"userId": "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72"}),
     );
     expect(delegate.result, "6d3c37a0-40c4-4c7e-a3ac-9bba19ab2a72");
   });
@@ -90,7 +94,8 @@ void main() {
     final delegate = TestDelegate();
     await platform.initialize(apiKey: "test", delegate: delegate);
     platform.delegateCallHandler(
-      const MethodCall('bridgefyDidDisconnect', {"userId": "6d3c37a0-40c4-4444-a3ac-9bba19ab2a72"}),
+      const MethodCall('bridgefyDidDisconnect',
+          {"userId": "6d3c37a0-40c4-4444-a3ac-9bba19ab2a72"}),
     );
     expect(delegate.result, "6d3c37a0-40c4-4444-a3ac-9bba19ab2a72");
   });
@@ -119,7 +124,8 @@ void main() {
         },
       ),
     );
-    expect(delegate.result["messageID"], "9fe6b168-eea1-4f9d-8770-8066d9fa0a43");
+    expect(
+        delegate.result["messageID"], "9fe6b168-eea1-4f9d-8770-8066d9fa0a43");
     final error = delegate.result["error"] as BridgefyError;
     expect(error.type, BridgefyErrorType.encodingError);
     expect(error.message, "test");
@@ -143,7 +149,11 @@ void main() {
         'bridgefyDidFailToEstablishSecureConnection',
         {
           "userId": "9fe6b168-eea1-4f9d-8770-8066d9fa0a43",
-          "error": {"code": "cannotCreateSecureConnection", "message": "test", "details": 0}
+          "error": {
+            "code": "cannotCreateSecureConnection",
+            "message": "test",
+            "details": 0
+          }
         },
       ),
     );
@@ -161,7 +171,11 @@ void main() {
       const MethodCall(
         'bridgefyDidFailToStart',
         {
-          "error": {"code": "serviceNotStarted", "message": "test", "details": 0}
+          "error": {
+            "code": "serviceNotStarted",
+            "message": "test",
+            "details": 0
+          }
         },
       ),
     );
@@ -178,7 +192,11 @@ void main() {
       const MethodCall(
         'bridgefyDidFailToStop',
         {
-          "error": {"code": "serviceNotStarted", "message": "test", "details": 0}
+          "error": {
+            "code": "serviceNotStarted",
+            "message": "test",
+            "details": 0
+          }
         },
       ),
     );
@@ -205,7 +223,8 @@ void main() {
       ),
     );
     expect(delegate.result["data"], Uint8List(0));
-    final mode = delegate.result["transmissionMode"] as BridgefyTransmissionMode;
+    final mode =
+        delegate.result["transmissionMode"] as BridgefyTransmissionMode;
     expect(mode.type, BridgefyTransmissionModeType.p2p);
     expect(mode.uuid, "dd438451-50f5-49c9-b13a-f3baf51a6580");
   });
@@ -216,10 +235,15 @@ void main() {
     platform.delegateCallHandler(
       const MethodCall(
         'bridgefyDidSendDataProgress',
-        {"messageId": "5c2160a6-2581-4c36-a7fb-2aedb8798976", "position": 5, "of": 7},
+        {
+          "messageId": "5c2160a6-2581-4c36-a7fb-2aedb8798976",
+          "position": 5,
+          "of": 7
+        },
       ),
     );
-    expect(delegate.result["messageID"], "5c2160a6-2581-4c36-a7fb-2aedb8798976");
+    expect(
+        delegate.result["messageID"], "5c2160a6-2581-4c36-a7fb-2aedb8798976");
     expect(delegate.result["position"], 5);
     expect(delegate.result["of"], 7);
   });

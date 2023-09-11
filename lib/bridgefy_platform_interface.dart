@@ -36,7 +36,8 @@ abstract class BridgefyPlatform extends PlatformInterface {
 
   Future<void> start({
     String? userId,
-    BridgefyPropagationProfile propagationProfile = BridgefyPropagationProfile.standard,
+    BridgefyPropagationProfile propagationProfile =
+        BridgefyPropagationProfile.standard,
   }) {
     throw UnimplementedError('start() has not been implemented.');
   }
