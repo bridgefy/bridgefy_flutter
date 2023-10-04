@@ -53,7 +53,11 @@ class MockBridgefyPlatform
   }
 
   @override
-  Future<void> start() {
+  Future<void> start({
+    String? userId,
+    BridgefyPropagationProfile propagationProfile =
+        BridgefyPropagationProfile.standard,
+  }) {
     throw UnimplementedError();
   }
 
