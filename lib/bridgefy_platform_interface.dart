@@ -18,6 +18,16 @@ abstract class BridgefyPlatform extends PlatformInterface {
   /// Defaults to [MethodChannelBridgefy].
   static BridgefyPlatform get instance => _instance;
 
+  /// If the SDK initialized
+  ///
+  /// Default false - not initialized
+  bool get isInitialized => _instance.isInitialized;
+
+  /// If the SDK started
+  ///
+  /// Default false - not started
+  bool get isStarted => _instance.isStarted;
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [BridgefyPlatform] when
   /// they register themselves.

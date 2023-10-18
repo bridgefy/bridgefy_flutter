@@ -12,7 +12,14 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('bridgefy');
   BridgefyDelegate? _delegate;
-  bool _initialized = false;
+  static bool _initialized = false;
+  static bool _started = false;
+
+  @override
+  bool get isInitialized => _initialized;
+
+  @override
+  bool get isStarted => _started;
 
   @override
   Future<void> initialize({
@@ -55,6 +62,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
     required BridgefyTransmissionMode transmissionMode,
   }) async {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     try {
       final result = await methodChannel.invokeMethod(
         'send',
@@ -75,12 +83,14 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<void> stop() {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     return methodChannel.invokeMethod('stop');
   }
 
   @override
   Future<List<String>> get connectedPeers async {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     final result = await methodChannel.invokeMethod('connectedPeers');
     return (result["connectedPeers"] as List).map((e) => e.toString()).toList();
   }
@@ -88,6 +98,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<String> get currentUserID async {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     final result = await methodChannel.invokeMethod('currentUserID');
     return result["userId"] as String;
   }
@@ -95,6 +106,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<void> establishSecureConnection({required String userID}) {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     return methodChannel
         .invokeMethod('establishSecureConnection', {"userId": userID});
   }
@@ -102,6 +114,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   @override
   Future<DateTime?> get licenseExpirationDate async {
     assert(_initialized, 'Bridgefy is not initialized');
+    assert(_started, 'Bridgefy is not started');
     final result = await methodChannel.invokeMethod('licenseExpirationDate');
     final interval = result["licenseExpirationDate"].toInt();
     if (interval != null) {
@@ -153,6 +166,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
   Future<dynamic> delegateCallHandler(MethodCall call) async {
     switch (call.method) {
       case "bridgefyDidStart":
+        _started = true;
         _delegate?.bridgefyDidStart(
             currentUserID: call.arguments['userId'] as String);
         break;
@@ -162,6 +176,7 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         );
         break;
       case "bridgefyDidStop":
+        _started = false;
         _delegate?.bridgefyDidStop();
         break;
       case "bridgefyDidFailToStop":
@@ -170,6 +185,8 @@ class MethodChannelBridgefy extends BridgefyPlatform {
         );
         break;
       case "bridgefyDidDestroySession":
+        _initialized = false;
+        _started = false;
         _delegate?.bridgefyDidDestroySession();
         break;
       case "bridgefyDidFailToDestroySession":

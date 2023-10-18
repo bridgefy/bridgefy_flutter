@@ -238,20 +238,16 @@ mixin BridgefyDelegate {
 
 /// Bridgefy SDK
 class Bridgefy {
+  /// Return if SDK is initialize
+  ///
+  /// Default false
+  static bool get isInitialized => BridgefyPlatform.instance.isInitialized;
 
-  static final Bridgefy _instance = Bridgefy._internal();
+  /// Return if SDK is start
+  ///
+  /// Default false
+  static bool get isStarted => BridgefyPlatform.instance.isStarted;
 
-  // This named constructor is the "real" constructor
-  // It'll be called exactly once, by the static property assignment above
-  // it's also private, so it can only be called in this class
-  Bridgefy._internal();
-
-  // using a factory is important
-  // because it promises to return _an_ object of this type
-  // but it doesn't promise to make a new one.
-  factory Bridgefy() {
-    return _instance;
-  }
   /// Initialize the SDK
   /// - Parameters:
   ///   - apiKey: API key

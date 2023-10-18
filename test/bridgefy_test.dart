@@ -70,6 +70,12 @@ class MockBridgefyPlatform
   Future<void> updateLicense() {
     throw UnimplementedError();
   }
+
+  @override
+  bool get isInitialized => throw UnimplementedError();
+
+  @override
+  bool get isStarted => throw UnimplementedError();
 }
 
 void main() {
