@@ -241,12 +241,12 @@ class Bridgefy {
   /// Return if SDK is initialize
   ///
   /// Default false
-  static bool get isInitialized => BridgefyPlatform.instance.isInitialized;
+  bool get isInitialized => BridgefyPlatform.instance.isInitialized;
 
   /// Return if SDK is start
   ///
   /// Default false
-  static bool get isStarted => BridgefyPlatform.instance.isStarted;
+  bool get isStarted => BridgefyPlatform.instance.isStarted;
 
   /// Initialize the SDK
   /// - Parameters:

@@ -55,11 +55,14 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     super.initState();
     checkPermissions().then((value) async {
       try {
-        await _bridgefy.initialize(
-          apiKey: apiKey,
-          delegate: this,
-          verboseLogging: true,
-        );
+        //you can validate if there is already an initialized instance to avoid an error in case it already exists
+        if (!_bridgefy.isInitialized){
+          await _bridgefy.initialize(
+            apiKey: apiKey,
+            delegate: this,
+            verboseLogging: true,
+          );
+        }
       } catch (e) {
         _log("Unable to initialize: $e");
       }
