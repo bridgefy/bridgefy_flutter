@@ -72,10 +72,12 @@ class MockBridgefyPlatform
   }
 
   @override
-  bool get isInitialized => throw UnimplementedError();
+  Future<bool> get isInitialized =>
+      Future.value(false);
 
   @override
-  bool get isStarted => throw UnimplementedError();
+  Future<bool> get isStarted =>
+      Future.value(false);
 }
 
 void main() {

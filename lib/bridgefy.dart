@@ -238,16 +238,6 @@ mixin BridgefyDelegate {
 
 /// Bridgefy SDK
 class Bridgefy {
-  /// Return if SDK is initialize
-  ///
-  /// Default false
-  bool get isInitialized => BridgefyPlatform.instance.isInitialized;
-
-  /// Return if SDK is start
-  ///
-  /// Default false
-  bool get isStarted => BridgefyPlatform.instance.isStarted;
-
   /// Initialize the SDK
   /// - Parameters:
   ///   - apiKey: API key
@@ -325,6 +315,14 @@ class Bridgefy {
   /// Returns connected peers
   Future<List<String>> get connectedPeers {
     return BridgefyPlatform.instance.connectedPeers;
+  }
+
+  Future<bool> get isInitialized {
+    return BridgefyPlatform.instance.isInitialized;
+  }
+
+  Future<bool> get isStarted {
+    return BridgefyPlatform.instance.isStarted;
   }
 
   /// Returns license expiration date

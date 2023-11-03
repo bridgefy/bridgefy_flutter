@@ -36,6 +36,12 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     case "currentUserID":
       currentUserID(call, result: result)
       break
+    case "isInitialized":
+      isInitialized(call, result: result)
+      break
+    case "isStarted":
+      isStarted(call, result: result)
+      break
     case "establishSecureConnection":
       establishSecureConnection(call, result: result)
       break
@@ -190,8 +196,16 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     })])
   }
 
+  private func isInitialized(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    result(["isInitialized": Bridgefy.isInitialized])
+  }
+
+  private func isStarted(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+      result(["isStarted": Bridgefy.isStarted])
+  }
+
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result(["userId": bridgefy!.currentUserId!.uuidString])
+      result(["userId": bridgefy!.currentUserId!.uuidString])
   }
 
   private func establishSecureConnection(_ call: FlutterMethodCall,
