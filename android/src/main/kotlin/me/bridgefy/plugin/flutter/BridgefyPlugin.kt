@@ -175,6 +175,9 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                 if (verboseLogging) Log.DEBUG else 1,
             )
             result.success(null)
+        }
+        catch (illegal: IllegalArgumentException) {
+            result.error("invalidAPIKey", illegal.message ?: illegal.localizedMessage, null)
         } catch (error: BridgefyException) {
             val map = mapFromBridgefyException(error)
             result.error(map["code"] as String, map["message"] as String, map["details"])
@@ -245,11 +248,11 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     }
 
     private fun isInitialized(@NonNull call: MethodCall, @NonNull result: Result) {
-        result.success(bridgefy.isInitialized)
+        result.success(hashMapOf("isInitialized" to bridgefy.isInitialized))
     }
 
     private fun isStarted(@NonNull call: MethodCall, @NonNull result: Result) {
-        result.success(bridgefy.isStarted)
+        result.success(hashMapOf("isStarted" to bridgefy.isStarted))
     }
 
     private fun mapFromBridgefyException(exception: BridgefyException): HashMap<String, Any?> {

@@ -20,6 +20,9 @@ rootProject.allprojects {
             url "http://34.82.5.94:8081/artifactory/libs-release-local"
             allowInsecureProtocol = true
         }
+        flatDir {
+            dirs("/Users/bridgefy/bridgefy/sdk/bridgefy_flutter/android/libs")
+        }
     }
 }
 
