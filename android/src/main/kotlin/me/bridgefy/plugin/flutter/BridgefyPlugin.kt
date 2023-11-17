@@ -44,6 +44,8 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
             "licenseExpirationDate" -> licenseExpirationDate(call, result)
             "destroySession" -> destroySession(call, result)
             "updateLicense" -> updateLicense(call, result)
+            "isInitialized" -> isInitialized(call, result)
+            "isStarted" -> isStarted(call, result)
             else -> result.notImplemented()
         }
     }
@@ -240,6 +242,14 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     private fun updateLicense(@NonNull call: MethodCall, @NonNull result: Result) {
         bridgefy.updateLicense()
         result.success(null)
+    }
+
+    private fun isInitialized(@NonNull call: MethodCall, @NonNull result: Result) {
+        result.success(bridgefy.isInitialized)
+    }
+
+    private fun isStarted(@NonNull call: MethodCall, @NonNull result: Result) {
+        result.success(bridgefy.isStarted)
     }
 
     private fun mapFromBridgefyException(exception: BridgefyException): HashMap<String, Any?> {
