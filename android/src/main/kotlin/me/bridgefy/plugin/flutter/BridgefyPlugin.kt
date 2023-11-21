@@ -175,12 +175,16 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                 if (verboseLogging) Log.DEBUG else 1,
             )
             result.success(null)
-        }
-        catch (illegal: IllegalArgumentException) {
+        } catch (illegal: IllegalArgumentException) {
+            illegal.printStackTrace()
             result.error("invalidAPIKey", illegal.message ?: illegal.localizedMessage, null)
         } catch (error: BridgefyException) {
+            error.printStackTrace()
             val map = mapFromBridgefyException(error)
             result.error(map["code"] as String, map["message"] as String, map["details"])
+        } catch (e: Exception) {
+            e.printStackTrace()
+            result.error("sessionError", e.message ?: e.localizedMessage, null)
         }
     }
 
