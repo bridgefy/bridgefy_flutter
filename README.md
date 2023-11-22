@@ -1,5 +1,3 @@
-
-
 <p align="center">
     <img src="https://www.gitbook.com/cdn-cgi/image/width=256,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F3290834949-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F5XKIMMP6VF2l9XuPV80l%252Flogo%252Fd78nQFIysoU2bbM5fYNP%252FGroup%25203367.png%3Falt%3Dmedia%26token%3Df83a642d-8a9a-411f-9ef4-d7189a4c5f0a" />
 </p>
@@ -44,7 +42,7 @@ To install this SDK, you'll need to either add the following to your `pubspec.ya
 
 ```yaml
 dependencies:
-  bridgefy: ^1.1.2
+  bridgefy: ^1.1.3
 ```
 
 Or run this flutter command:
@@ -58,8 +56,7 @@ flutter pub add bridgefy
 ### Initialization
 
 The init method initializes the Bridgefy SDK with the given API key and verbose logging. The
-delegate parameter is required and should be an object that conforms to the `BridgefyDelegate`
-mixin.
+delegate parameter is required and should be an object that conforms to the `BridgefyDelegate`mixin.
 
 The following code shows how to init the SDK (using your API key) and how to assign the delegate.
 
@@ -96,6 +93,14 @@ The following code shows how to start the SDK with propagation profile and custo
 
 ````
 
+### Stop Bridgefy
+
+Stop Bridgefy operations
+```dart
+	_bridgefy.stop();
+```
+
+
 ### Sending data
 
 The following method is used to send data using a transmission mode. This method returns a UUID to
@@ -123,9 +128,17 @@ The following is an example event emitted when a message is successfully sent:
 ```dart
 @override
 void bridgefyDidSendMessage({required String messageID}) {
-  // `messageID` contains the ID of the message.
+  // `messageID` The id of the message sent successfully.
+}
+
+// This function is called when the message could not be sent.
+@override
+void bridgefyDidFailSendingMessage({required String messageID, BridgefyError? error}) {
+    // `messageID`: The id of the message that was tried to be sent.
+	// `error`: Error reason.
 }
 ```
+
 
 When the app received data through Bridgefy:
 
@@ -139,6 +152,24 @@ void bridgefyDidReceiveData({
   // `data` contains the message bytes.
 }
 ```
+
+### Transmission Mode
+
+`BridgefyTransmissionModeType` specifies different transmission modes:
+
+- `p2p`: Deliver a message to a specific recipient only if there's an active connection with it.
+- `mesh`: Deliver a message to a specific recipient using nearby devices to propagate it.
+- `broadcast`: Propagate a message readable by every device that receives it.
+
+### PropagationProfile
+
+`BridgefyPropagationProfile` defines different propagation profiles within the BridgefySDK.
+
+- `standard`: Represents a standard propagation profile.
+- `highDensityNetwork`: Indicates a propagation profile suitable for high-density networks.
+- `sparseNetwork`: Represents a propagation profile tailored for sparse networks.
+- `longReach`: Indicates a propagation profile optimized for long reach.
+- `shortReach`: Represents a propagation profile designed for short reach communication.
 
 ### Nearby peer detection
 
@@ -161,6 +192,43 @@ When a peer is disconnected(out of range), the following method will be invoked:
 ```
 
 To see a full list of events, take a look at the `BridgefyDelegate` mixin.
+
+### Other Utilities
+
+Retrieve current user ID:
+
+ ```dart
+ String currentUserID = await _bridgefy.currentUserID;
+ ```
+
+Get a list of connected peers:
+
+
+ ```dart
+ List<String> connectedPeers = await _bridgefy.connectedPeers;
+ ```
+
+Check if the SDK is initialized or started:
+
+ ```dart
+bool isInitialized = await _bridgefy.isInitialized;
+bool isStarted = await _bridgefy.isStarted;
+ ```
+
+Retrieve license expiration date:
+
+
+```dart
+DateTime? expirationDate = await _bridgefy.licenseExpirationDate;
+```
+
+### License Update
+Update the license:
+
+```dart
+await _bridgefy.updateLicense();
+```
+
 
 ## Multi-Platform Support
 

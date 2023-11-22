@@ -20,7 +20,6 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
   String apiKey = "YOUR_API_KEY_HERE";
   final _bridgefy = Bridgefy();
   bool _didStart = false;
-  String _buttonText = 'Start';
   String _logStr = '';
   final Color _bfColor = const Color(0x00FF4040);
   final _scrollController = ScrollController();
@@ -55,11 +54,16 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     super.initState();
     checkPermissions().then((value) async {
       try {
-        await _bridgefy.initialize(
-          apiKey: apiKey,
-          delegate: this,
-          verboseLogging: true,
-        );
+        //you can validate if there is already an initialized instance to avoid an error in case it already exists
+        final isInitialized = await _bridgefy.isInitialized;
+        _didStart = await _bridgefy.isStarted;
+        if (!isInitialized){
+          await _bridgefy.initialize(
+            apiKey: apiKey,
+            delegate: this,
+            verboseLogging: true,
+          );
+        }
       } catch (e) {
         _log("Unable to initialize: $e");
       }
@@ -95,7 +99,7 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
                             ? const Icon(Icons.stop_circle)
                             : const Icon(Icons.check_circle),
                         onPressed: _toggleStart,
-                        label: Text(_buttonText)),
+                        label: Text(_didStart ? "Stop" : "Start")),
                     const SizedBox(width: 7),
                     ElevatedButton.icon(
                         icon: const Icon(Icons.send),
@@ -222,7 +226,6 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     _log("bridgefyDidStart: $currentUserID");
     setState(() {
       _didStart = true;
-      _buttonText = 'Stop';
     });
   }
 
@@ -231,7 +234,6 @@ class _MyAppState extends State<MyApp> implements BridgefyDelegate {
     _log("bridgefyDidStop");
     setState(() {
       _didStart = false;
-      _buttonText = 'Start';
     });
   }
 

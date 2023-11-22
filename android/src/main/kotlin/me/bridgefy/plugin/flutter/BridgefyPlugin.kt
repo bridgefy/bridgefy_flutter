@@ -44,6 +44,8 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
             "licenseExpirationDate" -> licenseExpirationDate(call, result)
             "destroySession" -> destroySession(call, result)
             "updateLicense" -> updateLicense(call, result)
+            "isInitialized" -> isInitialized(call, result)
+            "isStarted" -> isStarted(call, result)
             else -> result.notImplemented()
         }
     }
@@ -173,9 +175,16 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                 if (verboseLogging) Log.DEBUG else 1,
             )
             result.success(null)
+        } catch (illegal: IllegalArgumentException) {
+            illegal.printStackTrace()
+            result.error("invalidAPIKey", illegal.message ?: illegal.localizedMessage, null)
         } catch (error: BridgefyException) {
+            error.printStackTrace()
             val map = mapFromBridgefyException(error)
             result.error(map["code"] as String, map["message"] as String, map["details"])
+        } catch (e: Exception) {
+            e.printStackTrace()
+            result.error("sessionError", e.message ?: e.localizedMessage, null)
         }
     }
 
@@ -240,6 +249,14 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
     private fun updateLicense(@NonNull call: MethodCall, @NonNull result: Result) {
         bridgefy.updateLicense()
         result.success(null)
+    }
+
+    private fun isInitialized(@NonNull call: MethodCall, @NonNull result: Result) {
+        result.success(hashMapOf("isInitialized" to bridgefy.isInitialized))
+    }
+
+    private fun isStarted(@NonNull call: MethodCall, @NonNull result: Result) {
+        result.success(hashMapOf("isStarted" to bridgefy.isStarted))
     }
 
     private fun mapFromBridgefyException(exception: BridgefyException): HashMap<String, Any?> {

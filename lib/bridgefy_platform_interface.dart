@@ -67,5 +67,9 @@ abstract class BridgefyPlatform extends PlatformInterface {
 
   Future<List<String>> get connectedPeers;
 
+  Future<bool> get isInitialized;
+
+  Future<bool> get isStarted;
+
   Future<DateTime?> get licenseExpirationDate;
 }

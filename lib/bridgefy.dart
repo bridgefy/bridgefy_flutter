@@ -317,6 +317,14 @@ class Bridgefy {
     return BridgefyPlatform.instance.connectedPeers;
   }
 
+  Future<bool> get isInitialized {
+    return BridgefyPlatform.instance.isInitialized;
+  }
+
+  Future<bool> get isStarted {
+    return BridgefyPlatform.instance.isStarted;
+  }
+
   /// Returns license expiration date
   Future<DateTime?> get licenseExpirationDate {
     return BridgefyPlatform.instance.licenseExpirationDate;
