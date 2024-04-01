@@ -22,7 +22,7 @@ To create a Bridgefy API KEY, follow these general steps:
   Replace the text "YOUR_APIKEY" with a key generated from your account, the paths where it should be replaced are as follows:
 >     example/android/app/src/main/AndroidManifest.xml
 >
->     example/lib/main.dart
+>     example/lib/config/environment.dart
 
 * **Review the documentation:** As you integrate the API into your application, refer to the Bridgefy documentation and guides for information on how to use their API effectively. The documentation should include details on available endpoints, usage limits, and best practices.
   * Documentation: https://docs.bridgefy.me/
