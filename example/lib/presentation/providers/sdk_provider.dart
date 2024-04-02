@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -43,6 +44,8 @@ class SdkProvider extends ChangeNotifier implements BridgefyDelegate {
       Permission.bluetoothConnect,
       Permission.bluetoothScan,
     ].request();
+    if (Platform.isIOS) return true;
+    
     bool granted = true;
     status.forEach((key, value) {
       if (value==PermissionStatus.permanentlyDenied || value==PermissionStatus.denied){
