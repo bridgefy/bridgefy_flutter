@@ -2,14 +2,14 @@ group 'me.bridgefy.plugin.flutter'
 version '1.0.0'
 
 buildscript {
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '1.9.23'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:8.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -40,8 +40,8 @@ android {
     compileSdkVersion 34
     namespace 'me.bridgefy.plugin.flutter'
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -58,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.1.2", ext: "aar") {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.1.4", ext: "aar") {
         transitive = true
     }
 }

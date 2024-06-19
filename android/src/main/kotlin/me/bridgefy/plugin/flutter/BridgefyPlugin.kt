@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import me.bridgefy.Bridgefy
+import me.bridgefy.logger.enum.LogType
 import me.bridgefy.commons.TransmissionMode
 import me.bridgefy.commons.exception.BridgefyException
 import me.bridgefy.commons.listener.BridgefyDelegate
@@ -172,7 +173,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
                         invokeDelegate("bridgefyDidStop", null)
                     }
                 },
-                if (verboseLogging) Log.DEBUG else 1,
+                if (verboseLogging) LogType.ConsoleLogger(Log.DEBUG) else LogType.None,
             )
             result.success(null)
         } catch (illegal: IllegalArgumentException) {
