@@ -1,4 +1,4 @@
-# Bridgefy Flutter 1.1.5
+# Bridgefy Flutter 1.1.6
 ### BLUETOOTH MESH NETWORKS
 
 Devices running your app create Bluetooth Low-Energy mesh networks, which work in large crowds, during and after natural disasters, and whenever else your users lose access to the Internet.
@@ -15,11 +15,9 @@ all taken
 
 ## Change Log
 
-### Version 1.1.5
-
-* Fix: Use maxSdkVersion 34 for android.permission.ACCESS_FINE_LOCATION
-* Chore: Add example config
-* Chore: Add log and message entities
-* Chore: Add chat and SDK providers
-* Chore: Add provider and upgrade permission_handler plugins
-* Docs: Update README example with the new path to use your API key
+### Version 1.1.6
+Android SDK: The latest version, `1.1.4`, is now available.
+Connectivity Improvements: Enhanced the reliability and stability of connections.
+Transaction Enhancements: Optimized the handling and processing of transactions.
+Data Transfer Speed: Achieved faster data transfers over BLE.
+Bug Fixes: Addressed several issues to improve overall performance.
