@@ -42,7 +42,7 @@ To install this SDK, you'll need to either add the following to your `pubspec.ya
 
 ```yaml
 dependencies:
-  bridgefy: ^1.1.5
+  bridgefy: ^1.1.6
 ```
 
 Or run this flutter command:
