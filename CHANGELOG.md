@@ -1,4 +1,4 @@
-# Bridgefy Flutter 1.1.6
+# Bridgefy Flutter 1.1.7
 ### BLUETOOTH MESH NETWORKS
 
 Devices running your app create Bluetooth Low-Energy mesh networks, which work in large crowds, during and after natural disasters, and whenever else your users lose access to the Internet.
@@ -15,9 +15,10 @@ all taken
 
 ## Change Log
 
-### Version 1.1.6
-Android SDK: The latest version, `1.1.4`, is now available.
-Connectivity Improvements: Enhanced the reliability and stability of connections.
-Transaction Enhancements: Optimized the handling and processing of transactions.
-Data Transfer Speed: Achieved faster data transfers over BLE.
-Bug Fixes: Addressed several issues to improve overall performance.
+### Version 1.1.7
+Android SDK: The latest version, `1.2.0`, is now available.
+iOS SDK: The latest version, `1.2.1`, is now available.
+Scanning issues after disconnection—ensuring the app seamlessly resumes scanning when a peer disconnects.
+Reset of lastStateBLE value when services stop, providing smoother handling of Bluetooth states.
+Automatic scanning restart after a BLE service restart when all peers disconnect, keeping your app’s connections running smoothly.
+
