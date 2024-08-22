@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/BridgefySDK-Swift.h</key>
 		<data>
-		vL41royy1L92CxxO2JhbXdRYWoc=
+		Ef5CWUPvHdiccMjDA5Kuodak47s=
 		</data>
 		<key>Headers/BridgefySDK.h</key>
 		<data>
@@ -14,47 +14,47 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mUhrhdG5mnKOtOdWuT4kUkc41zc=
+		8uS8ED70MzdD77pdd6CDBq8IsO0=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		iamJSvEa8Rq7JkdRVJX5dqEmRdM=
+		GpQl+Hy6pegsgf2cW0bpQhWWOTc=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		l2TM91Dqunk3MoHaG/+5VotWhIo=
+		kX684C9WjGGMAR6te/h22klnP20=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		/VZBeaMyrRkiqz4nzT/ErAs44Pc=
+		175eYcc8kpyLG+twsq94hxQKRSg=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		l2TM91Dqunk3MoHaG/+5VotWhIo=
+		kX684C9WjGGMAR6te/h22klnP20=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		gi9euMQbiQUn8UXpxJvXYHFL19w=
+		bxebxZZNC/Dlq1OUmv7R1sf63pc=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		iamJSvEa8Rq7JkdRVJX5dqEmRdM=
+		GpQl+Hy6pegsgf2cW0bpQhWWOTc=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		vemVM+fCilFIfREMIrTWGxRA0GY=
+		KSD1HUsDwXLnhK1QjMX32N3FG5o=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		mGZjGDDbc+jp4ci7LwxKuHyAPu4=
+		eBBZZZSbQtavzXJyXs4Zeak1yTo=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		vemVM+fCilFIfREMIrTWGxRA0GY=
+		KSD1HUsDwXLnhK1QjMX32N3FG5o=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		KfJi29o05aRHijyN+IW5BkG+lfM=
+		5AH6Qi/hvl+FAGn4Rsjm9ACNF5U=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -67,7 +67,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			pA/r6NgIYgncTQMvC78IB7boxm95YiSIYexVUWTzEwM=
+			exGLBfq08z/Z4HvsaBzNVB0tZxiG1teIlVeysJmyAeQ=
 			</data>
 		</dict>
 		<key>Headers/BridgefySDK.h</key>
@@ -81,70 +81,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			e/j9VJAtii/ooxjnXmpHAPQk8uNwEYXeL47/IVnqJjY=
+			0vPOp6qtFjlKZg+1i69hU1CEpS2HGdjTRIhd8Y8q5OY=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sKeZ4difcd6mQE3flO9oBLlXUE10H3+g1TXlnJSNb7s=
+			MTjxSqiOgx7GgHLJu3+UlYGjaozq7KzvjjpoUrmnXTI=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kzghvsHG+PIgBxMDqCBKSyqd2BWiz9sl1Y8v6JGDAm8=
+			xUwNkizu4uNnOUij2VQgb5/KaDRSBFW8OxJMeHmZQrI=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			sKeZ4difcd6mQE3flO9oBLlXUE10H3+g1TXlnJSNb7s=
+			MTjxSqiOgx7GgHLJu3+UlYGjaozq7KzvjjpoUrmnXTI=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jmpBbFIjIOvWKNFvrozBRaw+03tQJ6qySYqiZPrbNaY=
+			NwvjMnDPf1ow/tsE9oblYxUW6Sby+TTk6clpdFye4Pk=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			e/j9VJAtii/ooxjnXmpHAPQk8uNwEYXeL47/IVnqJjY=
+			0vPOp6qtFjlKZg+1i69hU1CEpS2HGdjTRIhd8Y8q5OY=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BYaMjkxOiVEBILrKCqeOQVElrFjn+f2UdO79Sbu7rC0=
+			Ig7yPnKFuloaw1QanQquss18fSz2Owx/IOi3mWCO7Kk=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uiqkfCoydnJzNDProxPqlm3iG3SStvvpvlkQUOcUKuc=
+			EGbd00lAYHkm51HqU4C7EGFNs24Mg7gIvaXE9cO/aX8=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BYaMjkxOiVEBILrKCqeOQVElrFjn+f2UdO79Sbu7rC0=
+			Ig7yPnKFuloaw1QanQquss18fSz2Owx/IOi3mWCO7Kk=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5mL2DqWdOJ7f3Tkj/iFkaSyylanDTLIRd33Nr/veu4k=
+			t9hsemHUWgE823dF5dB2K2FImSZWlpfZ/dgH5+x7CYo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
