@@ -23,9 +23,9 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 35
     // ndkVersion flutter.ndkVersion
-    ndkVersion "26.1.10909125"
+    ndkVersion "28.0.12916984"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -66,5 +66,5 @@ flutter {
 }
 
 dependencies {
-    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.4"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.4"
 }
