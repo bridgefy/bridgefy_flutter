@@ -13,12 +13,19 @@ is fragile and unstable.
 All of your users participate in the mesh networks without having to provide any extra permissions, perform any actions, or even be aware of participating in traffic. Battery, storage, and processor are 
 all taken
 
-## Change Log
+### Change Log Version 1.1.8
 
-### Version 1.1.8
-Android SDK: The latest version, `1.2.2`, is now available.
-iOS SDK: The latest version, `1.2.1`, is now available.
-Scanning issues after disconnection—ensuring the app seamlessly resumes scanning when a peer disconnects.
-Reset of lastStateBLE value when services stop, providing smoother handling of Bluetooth states.
-Automatic scanning restart after a BLE service restart when all peers disconnect, keeping your app’s connections running smoothly.
+### Updated
+- Upgraded Bridgefy SDK from 1.2.0 to 1.2.2.
+- Added required Bluetooth permissions to support Android 12+ properly.
+#### Changes in Android Manifest
+Added missing permissions to ensure Bluetooth functionality:
+```xml
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+```
 
+### Bug Fixes
+- Fixed a crash related to missing **BLUETOOTH_ADMIN** permission reported in Play Store console.
