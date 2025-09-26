@@ -14,11 +14,11 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Wz6G/nfO9zmuJSCma7lCnz/WguM=
+		j1sHhP+o8vuqYRAF0a0rjWzWzkQ=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		ao1Gu88pyIMKEhiRfkHaes8HZX8=
+		8wVIEhkvhaFIRHOS6Pxj/vvBUx8=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		GtrIAAdC91QDWY+GyD6tPhri1OQ=
+		6LDtwvDB7Ozhqg25Rsm0852Szvo=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		ao1Gu88pyIMKEhiRfkHaes8HZX8=
+		8wVIEhkvhaFIRHOS6Pxj/vvBUx8=
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ea1aALD0AxdVsG0tVvhoO8LIGTQ=
+		gc2bneCDTl9Nplqg6gvgG5BlWXU=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -81,7 +81,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			uJoeTDXL+ybUelLbRbrWPm931kMBaLjEddbquHedQ6M=
+			07mzgpQcKj/XFRrU9hvt7X7mwLYxGB/Ms4CbPfqpeKY=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
@@ -109,14 +109,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ac2n9u65pIZcMomgJV7tksz3ISUAcgqpTway81vG5wg=
+			2smIwRTj7olNTVPoKL+r3rGQZIcropqOGqwRLPOdDE0=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uJoeTDXL+ybUelLbRbrWPm931kMBaLjEddbquHedQ6M=
+			07mzgpQcKj/XFRrU9hvt7X7mwLYxGB/Ms4CbPfqpeKY=
 			</data>
 		</dict>
 		<key>Modules/BridgefySDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
@@ -144,7 +144,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JmieGDDfyFFSkIrzxDwiNd65ZKllCCf0b7ZiaRDC4pQ=
+			RJ/AtvGhxGmzoaHVzhQCHkChDVX6RxE+BKDzwmcDKJI=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
