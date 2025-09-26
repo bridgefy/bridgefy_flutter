@@ -23,7 +23,6 @@ android/.classpath
 android/.project
 android/gradlew
 android/gradlew.bat
-example/
 .metadata
 Podfile.lock
 .gitignore
