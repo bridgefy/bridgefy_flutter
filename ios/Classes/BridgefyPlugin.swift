@@ -64,7 +64,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidStart(with userId: UUID) {
     channel.invokeMethod("bridgefyDidStart",
-                         arguments: ["userId": userId.uuidString])
+                         arguments: ["userId": userId.uuidString.lowercased()])
   }
 
   public func bridgefyDidFailToStart(with error: BridgefySDK.BridgefyError) {
@@ -94,38 +94,38 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   public func bridgefyDidConnect(with userId: UUID) {
     channel.invokeMethod("bridgefyDidConnect",
-                         arguments: ["userId": userId.uuidString])
+                         arguments: ["userId": userId.uuidString.lowercased()])
   }
 
   public func bridgefyDidDisconnect(from userId: UUID) {
     channel.invokeMethod("bridgefyDidDisconnect",
-                         arguments: ["userId": userId.uuidString])
+                         arguments: ["userId": userId.uuidString.lowercased()])
   }
 
   public func bridgefyDidEstablishSecureConnection(with userId: UUID) {
     channel.invokeMethod("bridgefyDidEstablishSecureConnection",
-                         arguments: ["userId": userId.uuidString])
+                         arguments: ["userId": userId.uuidString.lowercased()])
   }
 
   public func bridgefyDidFailToEstablishSecureConnection(with userId: UUID,
                                                          error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailToEstablishSecureConnection",
                          arguments: [
-                          "userId": userId.uuidString,
+                          "userId": userId.uuidString.lowercased(),
                           "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
 
   public func bridgefyDidSendMessage(with messageId: UUID) {
     channel.invokeMethod("bridgefyDidSendMessage",
-                         arguments: ["messageId": messageId.uuidString])
+                         arguments: ["messageId": messageId.uuidString.lowercased()])
   }
 
   public func bridgefyDidFailSendingMessage(with messageId: UUID,
                                             withError error: BridgefySDK.BridgefyError) {
     channel.invokeMethod("bridgefyDidFailSendingMessage",
                          arguments: [
-                          "messageId": messageId.uuidString,
+                          "messageId": messageId.uuidString.lowercased(),
                           "error": errorDictionary(from: error)
                          ] as [String : Any])
   }
@@ -136,7 +136,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     channel.invokeMethod("bridgefyDidReceiveData",
                          arguments: [
                           "data": data,
-                          "messageId": messageId.uuidString,
+                          "messageId": messageId.uuidString.lowercased(),
                           "transmissionMode": transmissionModeDictionary(from: transmissionMode)
                          ] as [String : Any])
   }
@@ -179,7 +179,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     let transmissionMode = transmissionMode(from: transmissionModeDict)!
     do {
       let uuid = try bridgefy!.send(data.data, using: transmissionMode)
-      result(["messageId": uuid.uuidString])
+      result(["messageId": uuid.uuidString.lowercased()])
     } catch let error {
       result(flutterError(from: error as! BridgefyError))
     }
@@ -192,7 +192,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
 
   private func connectedPeers(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     result(["connectedPeers": bridgefy!.connectedPeers!.map({ uuid in
-      uuid.uuidString
+      uuid.uuidString.lowercased()
     })])
   }
 
@@ -205,14 +205,14 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
   }
 
   private func currentUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-      result(["userId": bridgefy!.currentUserId!.uuidString])
+      result(["userId": bridgefy!.currentUserId!.uuidString.lowercased()])
   }
 
   private func establishSecureConnection(_ call: FlutterMethodCall,
                                          result: @escaping FlutterResult) {
     let args = call.arguments as! Dictionary<String, Any>
     let uuidStr = args["userId"] as! String
-    let uuid = UUID(uuidString: uuidStr)!
+    let uuid = UUID(uuidString: uuidStr.lowercased())!
     bridgefy!.establishSecureConnection(with: uuid)
     result(nil)
   }
@@ -276,11 +276,11 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     -> Dictionary<String, String> {
     switch transmissionMode {
     case .p2p(userId: let uuid):
-      return ["mode": "p2p", "uuid": uuid.uuidString]
+      return ["mode": "p2p", "uuid": uuid.uuidString.lowercased()]
     case .mesh(userId: let uuid):
-      return ["mode": "mesh", "uuid": uuid.uuidString]
+      return ["mode": "mesh", "uuid": uuid.uuidString.lowercased()]
     case .broadcast(senderId: let uuid):
-      return ["mode": "broadcast", "uuid": uuid.uuidString]
+      return ["mode": "broadcast", "uuid": uuid.uuidString.lowercased()]
     @unknown default:
       return [:]
     }
