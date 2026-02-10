@@ -335,6 +335,7 @@ class BridgefyPlugin : FlutterPlugin, MethodCallHandler {
             "longReach" -> PropagationProfile.LongReach
             "shortReach" -> PropagationProfile.ShortReach
             "standard" -> PropagationProfile.Standard
+            "realtime" -> PropagationProfile.Realtime
             else -> null
         }
     }
