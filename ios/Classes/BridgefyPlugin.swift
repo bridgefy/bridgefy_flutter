@@ -290,7 +290,7 @@ public class BridgefyPlugin: NSObject, FlutterPlugin, BridgefyDelegate {
     var type: String
     var details: Int?
     switch bridgefyError {
-    case .licenseError(code: let code):
+    case .licenseError(code: let code, data: let data):
       type = "licenseError"
       details = code
       break
