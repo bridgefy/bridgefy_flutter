@@ -79,7 +79,7 @@ class SdkProvider extends ChangeNotifier implements BridgefyDelegate {
   Future<void> start({
     String? userId,
     BridgefyPropagationProfile propagationProfile =
-        BridgefyPropagationProfile.standard,
+        BridgefyPropagationProfile.realtime,
   }) async {
     if (!isInitialized || !permissionsGranted){
       await initialized();
