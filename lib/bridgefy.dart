@@ -10,7 +10,8 @@ enum BridgefyPropagationProfile {
   highDensityNetwork,
   sparseNetwork,
   longReach,
-  shortReach
+  shortReach,
+  realtime
 }
 
 /// The mode used to propagate a message through nearby devices.

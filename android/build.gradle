@@ -17,7 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         maven {
-            url "http://34.82.5.94:8081/artifactory/libs-release-local"
+            url "https://maven.bridgefy.me"
             allowInsecureProtocol = true
         }
         flatDir {
@@ -58,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.2.4", ext: "aar") {
+    implementation (group: "me.bridgefy", name: "android-sdk", version: "1.2.5", ext: "aar") {
         transitive = true
     }
 }
