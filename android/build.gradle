@@ -17,7 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         maven {
-            url "http://34.82.5.94:8081/artifactory/libs-release-local"
+            url "https://maven.bridgefy.me"
             allowInsecureProtocol = true
         }
         flatDir {
